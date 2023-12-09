@@ -22,7 +22,7 @@ public class Main {
         {
             for (String value : row)
             {
-                System.out.print(value + " \t    | ");
+                System.out.print("("+value+")" + " \t    | ");
             }
             System.out.println();
         }
