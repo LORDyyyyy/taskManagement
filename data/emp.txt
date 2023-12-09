@@ -1,12 +1,12 @@
 id          |name       |password=3
 ------------|-----------|-----------
-1         |man        |yes
-2        |tets       |no
-2          |man        |yes
-3        |ee         |no
-2          |man        |no
-1         |man        |yes
-2        |tets       |no
-2          |man        |yes
-3        |ee         |no
-2          |man        |no
+1			|man        |yes
+2	        |tets       |no
+2			|man        |yes
+3	        |ee         |no
+2	        |man        |no
+1		    |man        |yes
+2			|tets       |no
+2           |man        |yes
+3			|ee         |no
+2           |man        |no
