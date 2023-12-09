@@ -4,27 +4,29 @@ public class Main {
         FileStorage fs = new FileStorage();
 
 
+        // Get a record from a table, specify the columns to check, and the values to compare
         int[] temp = new int[] {0, 1};
-        // String[] tempstr = new String[] { "man" };
+        String[][] res = fs.read("emp.txt", temp, Helpers.paramsToArr(1, "man"));
 
-        String[][] ans = fs.read("emp.txt", temp, Helpers.paramsToArr(1, "man"));
+        // Get all record from a table
+        String[][] table = fs.read("emp");
 
-        // String[][] ans = fs.read("emp.txt");
-
+        // Get the header of a table.
         System.out.println(fs.readHeaer("emp.txt")[0]);
         System.out.println(fs.readHeaer("emp.txt")[1]);
         
-        // if (Helpers.isEmptyTable(ans))
-            // System.out.println("its empty!!!");
+        if (Helpers.isEmptyTable(res))
+            System.out.println("its empty!!!");
 
-        for (String[] row : ans) {
-            for (String col : row) {
-                System.out.print(col + " \t| ");
+            for (String[] row : res)
+        {
+            for (String value : row)
+            {
+                System.out.print(value + " \t| ");
             }
             System.out.println();
         }
 
-        // System.out.println(fs.toString());
-        // System.out.println(Helpers.maxArr(new int[] { 1, 88, 2, 3, 6 }));
+        System.out.println(fs.toString()); // TODO
     }
 }

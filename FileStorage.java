@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * @author: LORDy
+ */
 public class FileStorage {
 
 	/**
@@ -48,7 +51,7 @@ public class FileStorage {
      *
      * @param tableName - Table name aka File name aka Class name.
      *
-     * @return the full table on sucess, empty 2d array otherwise.
+     * @return 2D String array contains the full table on success, empty 2D array otherwise.
      */
     public String[][] read(String tableName)
     {
@@ -116,6 +119,17 @@ public class FileStorage {
     }
 
 
+	/**
+	 * [TODO:description]
+	 *
+	 * @param tableName [TODO:description]
+	 * @param columns [TODO:description]
+	 * @param values [TODO:description]
+	 *
+	 * @return [TODO:description]
+	 *
+	 * @throws Exception [TODO:description]
+	 */
     public String[][] read(String tableName, int[] columns, String[] values) throws Exception
     {
         this.clean(tableName);
