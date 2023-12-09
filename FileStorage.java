@@ -11,7 +11,7 @@ import java.io.IOException;
 public class FileStorage {
 
 	/**
-     * Cleans a file before making any operations on a file.
+     * Cleans a file before making any operations on it.
      * Removes the empty lines from the file.
      *
      * @param tableName - Table name aka File name aka Class name.
@@ -28,19 +28,19 @@ public class FileStorage {
 
             BufferedWriter write = new BufferedWriter(new FileWriter(f));
 
-            for (String line: fileLines)
-            {
+            for (String line : fileLines) {
                 if (line.equals(""))
                     continue;
-                else
-                {
+                else {
                     write.write(line);
                     write.newLine();
                     write.flush();
                 }
             }
             write.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             return;
         }
     }
@@ -72,10 +72,7 @@ public class FileStorage {
                 String[] words = fileLines[i].split("\\|");
 
                 for (int j = 0; j < colsNo; j++)
-                {
-                    String word = words[j].strip();
-                    table[i - 2][j] = word;
-                }
+                    table[i - 2][j] = words[j].strip();
             }
             
             bf.close();

@@ -5,8 +5,8 @@ public class Main {
 
 
         // Get a record from a table, specify the columns to check, and the values to compare
-        int[] temp = new int[] {0, 1};
-        String[][] res = fs.read("emp.txt", temp, Helpers.paramsToArr(1, "man"));
+        int[] temp = new int[] {0, 1, 2};
+        String[][] res = fs.read("emp.txt", temp, Helpers.paramsToArr(2, "man", "no"));
 
         // Get all record from a table
         String[][] table = fs.read("emp");
@@ -22,7 +22,7 @@ public class Main {
         {
             for (String value : row)
             {
-                System.out.print(value + " \t| ");
+                System.out.print(value + " \t    | ");
             }
             System.out.println();
         }
