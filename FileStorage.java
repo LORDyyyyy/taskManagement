@@ -51,17 +51,17 @@ public class FileStorage {
     
 
 	/**
-	 * [TODO:description]
+	 * Overwrites a file with a new table
 	 *
-	 * @param tableName [TODO:description]
-	 * @param table [TODO:description]
+	 * @param tableName - Table name aka File name aka Class name.
+	 * @param table - The new table to overwrite
 	 *
-	 * @return [TODO:description]
+	 * @return 0 on success, 1 otherwise
 	 */
     public int write(String tableName, String[][] table)
     {
         try {
-            String[] header = this.readHeaer(tableName);
+            String[] header = this.readHeader(tableName);
             File file = new File("data", Helpers.tableNameLoc(tableName));
             BufferedWriter write = new BufferedWriter(new FileWriter(file));
 
@@ -132,21 +132,26 @@ public class FileStorage {
 	 *
 	 * @return The 2 header lines of the table.
 	 */
-    public String[] readHeaer(String tableName)
+    public String[] readHeader(String tableName)
     {
         this.clean(tableName);
         File file = new File("data", Helpers.tableNameLoc(tableName));
 
         try (BufferedReader bf = new BufferedReader(new FileReader(file));)
         {
-            String[] fileLines = bf.lines().toArray(String[]::new);
-            String[] headerLines = new String[fileLines.length];
+            String[] headerLines = new String[2];
+            int lineCount = 0;
 
-            if (fileLines.length <= 0)
-                return (new String[0]);
+            while (lineCount < 2)
+            {
+                String line = bf.readLine();
 
-            for (int i = 0; i < fileLines.length; i++)
-                headerLines[i] = fileLines[i];
+                if (line == null)
+                    return (new String[0]);
+                headerLines[lineCount] = line;
+                lineCount++;
+            }
+
             bf.close();
             return (headerLines);
         }
@@ -158,15 +163,15 @@ public class FileStorage {
 
 
 	/**
-	 * [TODO:description]
+	 * Read a row from the table with a specific condition
 	 *
-	 * @param tableName [TODO:description]
-	 * @param columns [TODO:description]
-	 * @param values [TODO:description]
+	 * @param tableName - Table name aka File name aka Class name.
+	 * @param columns - The columns which will be checked by a condition
+	 * @param values - The condition value]
 	 *
-	 * @return [TODO:description]
+	 * @return 2D String array contains the resutls on success, empty 2D array otherwise.
 	 *
-	 * @throws Exception [TODO:description]
+	 * @throws Exception An error with file/values
 	 */
     public String[][] read(String tableName, int[] columns, String[] values) throws Exception
     {
@@ -175,16 +180,16 @@ public class FileStorage {
 
 
 	/**
-	 * [TODO:description]
+	 * Read a row from the table with a specific condition
 	 *
-	 * @param tableName [TODO:description]
-	 * @param columns [TODO:description]
-	 * @param values [TODO:description]
-	 * @param invert [TODO:description]
+	 * @param tableName - Table name aka File name aka Class name.
+	 * @param columns - The columns which will be checked by a condition
+	 * @param values - The condition value
+	 * @param invert - Add the NOT operator to the condtion, default false
 	 *
-	 * @return [TODO:description]
+	 * @return 2D String array contains the resutls on success, empty 2D array otherwise.
 	 *
-	 * @throws Exception [TODO:description]
+	 * @throws Exception An error with file/values
 	 */
     public String[][] read(String tableName, int[] columns, String[] values, boolean invert) throws Exception
     {
@@ -232,46 +237,45 @@ public class FileStorage {
 
 
 	/**
-	 * [TODO:description]
+	 * Delete a line/row from the table 
 	 *
-	 * @param tableName [TODO:description]
-	 * @param columns [TODO:description]
-	 * @param values [TODO:description]
+	 * @param tableName - Table name aka File name aka Class name.
+	 * @param columns - The columns which will be checked by a condition
+	 * @param values - The condition value
 	 *
-	 * @return [TODO:description]
+	 * @return 0 on success, 1 otherwise
 	 *
-	 * @throws Exception [TODO:description]
+	 * @throws Exception an error with file/values
 	 */
     public int delete(String tableName, int[] columns, String[] values) throws Exception
     {
         String[][] table = this.read(tableName, columns, values, true);
-        if (table.length == 0)
-            return (1);
+        // if (table.length == 0)
+        //     return (0);
 
         return (this.write(tableName, table));
     }
 
 
 	/**
-	 * [TODO:description]
+	 * Append a new line/row to the table
 	 *
-	 * @param tableName [TODO:description]
-	 * @param values [TODO:description]
+	 * @param tableName - Table name aka File name aka Class name
+	 * @param values - the row to be added in an array os strings
 	 *
-	 * @return [TODO:description]
+	 * @return 0 on success, 1 otherwise
 	 *
-	 * @throws Exception [TODO:description]
+	 * @throws Exception - an error with file/values
 	 */
     public int add(String tableName, String[] values) throws Exception
     {
         File file = new File("data", Helpers.tableNameLoc(tableName));
         try (BufferedWriter write = new BufferedWriter(new FileWriter(file, true))) {
-            String[][] table = this.read(tableName);
+            // String[][] table = this.read(tableName);
 
-            if (values.length != table[0].length)
+            if (values.length != getTableColsNo(tableName))
                 throw new Exception("Invalid number of values to insert...");
 
-            
             for (int i = 0; i < values.length; i++)
             {
                 write.write(values[i]);
@@ -286,9 +290,42 @@ public class FileStorage {
 
 
 	/**
-	 * [TODO:description]
+     * Get the next id to be inserted in a table.
+     * SQL AUTO_INCREMENT Like.
+     *
+     * @param tableName - Table name aka File name aka Class name.
+     *
+     * @return the new id
+     */
+    public int getNextID(String tableName)
+    {
+        String[][] table = this.read(tableName);
+        if (table.length == 0)
+            return (1);
+        return (Integer.parseInt(table[table.length - 1][0]) + 1);
+
+    }
+
+
+	/**
+	 * Get the number of a tables columns
 	 *
-	 * @return [TODO:description]
+	 * @param tableName - Table name aka File name aka Class name.
+	 *
+	 * @return Number of columns
+	 */
+    public int getTableColsNo(String tableName)
+    {
+        String[] header = this.readHeader(tableName);
+
+        return (header[0].split("\\" + this.seperator).length);
+    }
+
+
+	/**
+	 * The string representation of the FileStorage Class
+	 *
+	 * @return String
 	 */
     @Override
     public String toString()

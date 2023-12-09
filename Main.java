@@ -11,8 +11,8 @@ public class Main {
         // String[][] table = fs.read("emp");
 
         // Get the header of a table.
-        // System.out.println(fs.readHeaer("emp.txt")[0]);
-        // System.out.println(fs.readHeaer("emp.txt")[1]);
+        System.out.println(fs.readHeader("emp.txt")[0]);
+        System.out.println(fs.readHeader("emp.txt")[1]);
         
         // if (Helpers.isEmptyTable(res))
         //     System.out.println("its empty!!!");
@@ -42,11 +42,11 @@ public class Main {
         // System.out.println("-----------------");
 
 
-        // if (fs.delete("emp.txt", temp, Helpers.paramsToArr("ali")) == 1)
-        //     System.out.println("error!");
+        // if (fs.delete("emp.txt", temp, Helpers.paramsToArr("khalid")) == 1)
+            // System.out.println("error!");
         
-        fs.add("leader", Helpers.paramsToArr(999, "khalid", "password122155", "mail@mail.com"));
-        String[][] res = fs.read("emp.txt", temp, Helpers.paramsToArr("ali"));
+        fs.add("emp", Helpers.paramsToArr(fs.getNextID("emp"), "khalid", "password122155"));
+        String[][] res = fs.read("emp.txt", temp, Helpers.paramsToArr("khalid"));
         for (String[] row : res)
         {
             for (String value : row) {

@@ -43,7 +43,7 @@ public class Helpers {
 	 */
 	public static int maxArr(int[] array)
 	{
-		return (Arrays.stream(array).max().orElseThrow());
+		return ( Arrays.stream(array).max().orElse(0));
 	}
 	
 
@@ -73,6 +73,8 @@ public class Helpers {
 	 */
 	public static String[][] removeNullRows(String[][] table)
 	{
+		if (table.length == 0)
+			return (new String[0][0]);
         int colNo = table[0].length;
 		int countNotNull = 0;
 		
