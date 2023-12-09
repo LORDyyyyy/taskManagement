@@ -28,9 +28,9 @@ public class Helpers {
 	 */
     public static String tableNameLoc(String tableName)
 	{
-		if (tableName.endsWith(".txt"))
-			return (tableName);
-		return (tableName + ".txt");
+		if (tableName.toLowerCase().endsWith(".txt"))
+			return (tableName.toLowerCase());
+		return (tableName.toLowerCase() + ".txt");
 	}
 	
 
@@ -41,7 +41,8 @@ public class Helpers {
 	 *
 	 * @return Max Element
 	 */
-	public static int maxArr(int[] array) {
+	public static int maxArr(int[] array)
+	{
 		return (Arrays.stream(array).max().orElseThrow());
 	}
 	
