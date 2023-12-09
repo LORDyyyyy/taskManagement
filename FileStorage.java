@@ -16,9 +16,9 @@ public class FileStorage {
      * Cleans a file before making any operations on it.
      * Removes the empty lines from the file.
      *
-    * @param tableName - Table name aka File name aka Class name.
+     * @param tableName - Table name aka File name aka Class name.
      */
-    public void clean(String tableName)
+    private void clean(String tableName)
     {
         try
         {
@@ -58,7 +58,7 @@ public class FileStorage {
 	 *
 	 * @return 0 on success, 1 otherwise
 	 */
-    public int write(String tableName, String[][] table)
+    private int write(String tableName, String[][] table)
     {
         try {
             String[] header = this.readHeader(tableName);
@@ -177,19 +177,17 @@ public class FileStorage {
     {
         return (this.read(tableName, columns, values, false));
     }
-
-
-	/**
+    /**
 	 * Read a row from the table with a specific condition
 	 *
 	 * @param tableName - Table name aka File name aka Class name.
-	 * @param columns - The columns which will be checked by a condition
+	 * @param columns - The columns index which will be checked by a condition
 	 * @param values - The condition value
 	 * @param invert - Add the NOT operator to the condtion, default false
 	 *
-	 * @return 2D String array contains the resutls on success, empty 2D array otherwise.
+     * @return 2D String array contains the resutls on success, empty 2D array otherwise.
 	 *
-	 * @throws Exception An error with file/values
+     * @throws Exception An error with file/values
 	 */
     public String[][] read(String tableName, int[] columns, String[] values, boolean invert) throws Exception
     {
@@ -199,7 +197,7 @@ public class FileStorage {
             return (new String[0][0]);
         try 
         {
-            if (table[0].length - 1 < Helpers.maxArr(columns))
+            if (this.getTableColsNo(tableName) - 1 < Helpers.maxArr(columns))
                 throw new Exception("Columns out of index....");
             if (columns.length != values.length)
                 throw new Exception("""
@@ -240,7 +238,7 @@ public class FileStorage {
 	 * Delete a line/row from the table 
 	 *
 	 * @param tableName - Table name aka File name aka Class name.
-	 * @param columns - The columns which will be checked by a condition
+	 * @param columns - The columns index which will be checked by a condition
 	 * @param values - The condition value
 	 *
 	 * @return 0 on success, 1 otherwise
@@ -250,8 +248,6 @@ public class FileStorage {
     public int delete(String tableName, int[] columns, String[] values) throws Exception
     {
         String[][] table = this.read(tableName, columns, values, true);
-        // if (table.length == 0)
-        //     return (0);
 
         return (this.write(tableName, table));
     }
@@ -270,10 +266,9 @@ public class FileStorage {
     public int add(String tableName, String[] values) throws Exception
     {
         File file = new File("data", Helpers.tableNameLoc(tableName));
-        try (BufferedWriter write = new BufferedWriter(new FileWriter(file, true))) {
-            // String[][] table = this.read(tableName);
-
-            if (values.length != getTableColsNo(tableName))
+        try (BufferedWriter write = new BufferedWriter(new FileWriter(file, true)))
+        {
+            if (values.length != this.getTableColsNo(tableName))
                 throw new Exception("Invalid number of values to insert...");
 
             for (int i = 0; i < values.length; i++)
@@ -286,6 +281,57 @@ public class FileStorage {
             write.flush();
         }
         return (0);
+    }
+
+
+	/**
+	 * Update a row's value in the table
+	 *
+	 * @param tableName - Table name aka File name aka Class name.
+	 * @param columns - The columns index which will be checked by a condition
+	 * @param values - The condition value
+	 * @param newCols - The new columns index which will be updated
+	 * @param newValues - The new values
+	 *
+	 * @return 0 on success, 1 otherwise
+	 *
+	 * @throws Exception an error with file/values
+	 */
+    public int update(String tableName, int[] columns, String[] values, int[] newCols, String[] newValues) throws Exception
+    {
+        String[][] table = this.read(tableName);
+        int colsNo = this.getTableColsNo(tableName);
+        if (table.length == 0)
+            return (0);
+
+        if (values.length > colsNo || newValues.length > colsNo || columns.length > colsNo || newCols.length > colsNo)
+            throw new Exception("Invalid number of values to insert...");
+        if (colsNo - 1 < Helpers.maxArr(columns) || colsNo - 1 < Helpers.maxArr(newCols))
+            throw new Exception("Columns out of index....");
+        if (columns.length != values.length || newCols.length != newValues.length )
+                throw new Exception("""
+                                        Number of Columns to compare
+                                        is not equal to Number of values!
+                                    """);
+
+        for (String[] row : table)
+        {
+            boolean flag = false;
+            for (int i = 0; i < columns.length; i++)
+            {
+                if (row[columns[i]].equals(values[i]))
+                    flag = true;
+                else
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+                for (int i = 0; i < newCols.length; i++)
+                    row[newCols[i]] = newValues[i];
+        }
+        return (this.write(tableName, table));
     }
 
 
@@ -308,13 +354,13 @@ public class FileStorage {
 
 
 	/**
-	 * Get the number of a tables columns
+	 * Get the number of a table's columns
 	 *
 	 * @param tableName - Table name aka File name aka Class name.
 	 *
 	 * @return Number of columns
 	 */
-    public int getTableColsNo(String tableName)
+    private int getTableColsNo(String tableName)
     {
         String[] header = this.readHeader(tableName);
 
