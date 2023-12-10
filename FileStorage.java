@@ -320,13 +320,11 @@ public class FileStorage {
     {
         File file = new File("data", hlp.tableNameLoc(tableName));
 
-        try (BufferedWriter write = new BufferedWriter(new FileWriter(file, true)))
-        {
+        try (BufferedWriter write = new BufferedWriter(new FileWriter(file, true))) {
             if (values.length != this.getTableColsNo(tableName))
                 throw new Exception("Invalid number of values to insert...");
 
-            for (int i = 0; i < values.length; i++)
-            {
+            for (int i = 0; i < values.length; i++) {
                 write.write(values[i]);
                 if (i + 1 != values.length)
                     write.write("\t\t\t" + this.seperator);
@@ -338,7 +336,7 @@ public class FileStorage {
     }
 
 
-	/**
+    /**
 	 * Update a row's value in the table
 	 *
 	 * @param tableName - Table name aka File name aka Class name.
@@ -352,6 +350,25 @@ public class FileStorage {
 	 * @throws Exception an error with file/values
 	 */
     public int update(String tableName, int[] columns, String[] values, int[] newCols, String[] newValues) throws Exception
+    {
+        return (this.update(tableName, columns, values, newCols, newValues, false, Integer.MAX_VALUE));
+    }
+	/**
+     * Update a row's value in the table
+     *
+     * @param tableName - Table name aka File name aka Class name.
+     * @param columns - The columns index which will be checked by a condition
+     * @param values - The condition value
+     * @param newCols - The new columns index which will be updated
+     * @param newValues - The new values
+     * @param backwards - true | false, weather to loop from the start or the end. default is false
+     * @param count - How many values do you want to update? default is INT_MAX
+     *
+     * @return 0 on success, 1 otherwise
+     *
+     * @throws Exception an error with file/values
+     */
+    public int update(String tableName, int[] columns, String[] values, int[] newCols, String[] newValues, boolean backwards, int count) throws Exception
     {
         String[][] table = this.read(tableName);
         int colsNo = this.getTableColsNo(tableName);
@@ -367,14 +384,17 @@ public class FileStorage {
                 throw new Exception("""
                                         Number of Columns to compare
                                         is not equal to Number of values!
-                                    """);
+                        """);
 
-        for (String[] row : table)
+        int start = backwards ? table.length - 1 : 0;
+        int end = backwards ? 0 : table.length;
+        int iteratorNewValue = backwards ? -1 : 1;
+
+        for (int row = start; backwards ? row >= end : row < end; row += iteratorNewValue)
         {
             boolean flag = false;
-            for (int i = 0; i < columns.length; i++)
-            {
-                if (row[columns[i]].equals(values[i]))
+            for (int i = 0; i < columns.length; i++) {
+                if (table[row][columns[i]].equals(values[i]))
                     flag = true;
                 else
                 {
@@ -383,9 +403,14 @@ public class FileStorage {
                 }
             }
             if (flag)
+            {
                 for (int i = 0; i < newCols.length; i++)
-                    row[newCols[i]] = newValues[i];
+                    table[row][newCols[i]] = newValues[i];
+                if (--count == 0)
+                    break;
+            }
         }
+        
         return (this.write(tableName, table));
     }
 

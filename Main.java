@@ -93,11 +93,12 @@ public class Main {
         // UPDATE emp SET name = Ahmed where ID = 3;
         //                 column name index = 1
         //                  columns id index = 0
-        // fs.update("emp",
-        //         hlp.intToArr(0),
-        //         hlp.paramsToArr(3),
-        //         hlp.intToArr(1),
-        //         hlp.paramsToArr("Ahmed"));
+        fs.update("emp",
+                hlp.intToArr(1),
+                hlp.paramsToArr("ALOOOOOO"),
+                hlp.intToArr(1),
+                hlp.paramsToArr("NOOOOOOOO"));
+
 
 
 
