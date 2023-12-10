@@ -9,15 +9,35 @@ public class Helpers {
 	 *
 	 * @return A String Array
 	 */
-    public static String[] paramsToArr(Object... params)
-    {
-        String[] paramsArr = new String[params.length];
+    public String[] paramsToArr(Object... params)
+	{
+		String[] paramsArr = new String[params.length];
 
-        for (int i = 0; i < params.length; i++)
-            paramsArr[i] = String.valueOf(params[i]);
+		for (int i = 0; i < params.length; i++)
+			paramsArr[i] = String.valueOf(params[i]);
 
-        return (paramsArr);
-    }
+		return (paramsArr);
+	}
+
+
+	/**
+	 * Takes an unknown number of int parameters
+	 * and convert them to an int Array
+	 *
+	 * @param params - Infinite number of int parameters
+	 *
+	 * @return An Int Array
+	 */
+	public int[] intToArr(int... params)
+	{
+		int[] paramsArr = new int[params.length];
+
+		for (int i = 0; i < params.length; i++)
+			paramsArr[i] = params[i];
+
+		return (paramsArr);
+	}
+
 
 	/**
 	 * Convert the table name to a file name if it's not already the file name
@@ -26,7 +46,7 @@ public class Helpers {
 	 *
 	 * @return Table's File name
 	 */
-    public static String tableNameLoc(String tableName)
+    public String tableNameLoc(String tableName)
 	{
 		if (tableName.toLowerCase().endsWith(".txt"))
 			return (tableName.toLowerCase());
@@ -41,7 +61,7 @@ public class Helpers {
 	 *
 	 * @return Max Element
 	 */
-	public static int maxArr(int[] array)
+	public int maxArr(int[] array)
 	{
 		return ( Arrays.stream(array).max().orElse(0));
 	}
@@ -54,7 +74,7 @@ public class Helpers {
 	 *
 	 * @return true | false
 	 */
-	public static boolean isEmptyTable(String[][] array)
+	public boolean isEmptyTable(String[][] array)
 	{
 		for (String[] row : array)
 			for (String str : row)
@@ -71,7 +91,7 @@ public class Helpers {
 	 *
 	 * @return A new version of the table without the null Rows.
 	 */
-	public static String[][] removeNullRows(String[][] table)
+	public String[][] removeNullRows(String[][] table)
 	{
 		if (table.length == 0)
 			return (new String[0][0]);

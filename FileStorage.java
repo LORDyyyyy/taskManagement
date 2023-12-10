@@ -5,12 +5,56 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
 /**
  * @author: LORDy
  */
 public class FileStorage {
 
     private String seperator = "|";
+    private Helpers hlp = new Helpers();
+
+
+	/**
+	 * Creates a new table/file with the passed paramters as the columns' names
+	 *
+	 * @param tableName Table name aka File name aka Class name.
+	 * @param columns the columns to add to the table
+	 *
+	 * @return true on success, false otherwise
+	 *
+	 * @throws Exception An error with file/values
+	 */
+    public boolean createTable(String tableName, String... columns) throws Exception
+    {
+        File f = new File("data", hlp.tableNameLoc(tableName));
+
+        try 
+        {
+            if (f.exists())
+                f.delete();
+            f.createNewFile();
+            try (BufferedWriter write = new BufferedWriter(new FileWriter(f)))
+            {
+                for (int i = 0; i < columns.length; i++) {
+                    write.write(columns[i]);
+                    if (i + 1 != columns.length)
+                        write.write("\t\t\t" + this.seperator);
+
+                }
+                write.write("=" + columns.length);
+                write.newLine();
+                for (int j = 0; j < 10 * (columns.length + 4); j++)
+                    write.write("-");
+                write.flush();
+            }
+            return (true);
+        } 
+        catch (IOException e){
+            return false;
+        }
+    }
+
 
     /**
      * Cleans a file before making any operations on it.
@@ -22,7 +66,7 @@ public class FileStorage {
     {
         try
         {
-            File f = new File("data", Helpers.tableNameLoc(tableName));
+            File f = new File("data", hlp.tableNameLoc(tableName));
             BufferedReader read = new BufferedReader(new FileReader(f));
             String[] fileLines = read.lines().toArray(String[]::new);
 
@@ -62,13 +106,13 @@ public class FileStorage {
     {
         try {
             String[] header = this.readHeader(tableName);
-            File file = new File("data", Helpers.tableNameLoc(tableName));
+            File file = new File("data", hlp.tableNameLoc(tableName));
             BufferedWriter write = new BufferedWriter(new FileWriter(file));
 
             write.write(header[0] + '\n');
             write.write(header[1] + '\n');
 
-            for (String[] row : Helpers.removeNullRows(table))
+            for (String[] row : hlp.removeNullRows(table))
             {
                 for (int i = 0; i < row.length; i++)
                 {
@@ -98,12 +142,13 @@ public class FileStorage {
     public String[][] read(String tableName)
     {
         this.clean(tableName);
-        File file = new File("data", Helpers.tableNameLoc(tableName));
+        File file = new File("data", hlp.tableNameLoc(tableName));
 
         try (BufferedReader bf = new BufferedReader(new FileReader(file));)
         {
             String[] fileLines = bf.lines().toArray(String[]::new);
             int rowsNo = fileLines.length - 2;
+
             if (rowsNo <= 0)
                 return (new String[0][0]);
 
@@ -135,7 +180,7 @@ public class FileStorage {
     public String[] readHeader(String tableName)
     {
         this.clean(tableName);
-        File file = new File("data", Helpers.tableNameLoc(tableName));
+        File file = new File("data", hlp.tableNameLoc(tableName));
 
         try (BufferedReader bf = new BufferedReader(new FileReader(file));)
         {
@@ -197,7 +242,7 @@ public class FileStorage {
             return (new String[0][0]);
         try 
         {
-            if (this.getTableColsNo(tableName) - 1 < Helpers.maxArr(columns))
+            if (this.getTableColsNo(tableName) - 1 < hlp.maxArr(columns))
                 throw new Exception("Columns out of index....");
             if (columns.length != values.length)
                 throw new Exception("""
@@ -225,7 +270,7 @@ public class FileStorage {
                     result[counterResult++] = row;
             }
 
-            return (Helpers.removeNullRows(result));
+            return (hlp.removeNullRows(result));
         }
         catch (IOException e)
         {
@@ -265,7 +310,8 @@ public class FileStorage {
 	 */
     public int add(String tableName, String[] values) throws Exception
     {
-        File file = new File("data", Helpers.tableNameLoc(tableName));
+        File file = new File("data", hlp.tableNameLoc(tableName));
+
         try (BufferedWriter write = new BufferedWriter(new FileWriter(file, true)))
         {
             if (values.length != this.getTableColsNo(tableName))
@@ -301,12 +347,13 @@ public class FileStorage {
     {
         String[][] table = this.read(tableName);
         int colsNo = this.getTableColsNo(tableName);
+
         if (table.length == 0)
             return (0);
 
         if (values.length > colsNo || newValues.length > colsNo || columns.length > colsNo || newCols.length > colsNo)
             throw new Exception("Invalid number of values to insert...");
-        if (colsNo - 1 < Helpers.maxArr(columns) || colsNo - 1 < Helpers.maxArr(newCols))
+        if (colsNo - 1 < hlp.maxArr(columns) || colsNo - 1 < hlp.maxArr(newCols))
             throw new Exception("Columns out of index....");
         if (columns.length != values.length || newCols.length != newValues.length )
                 throw new Exception("""
@@ -346,6 +393,7 @@ public class FileStorage {
     public int getNextID(String tableName)
     {
         String[][] table = this.read(tableName);
+
         if (table.length == 0)
             return (1);
         return (Integer.parseInt(table[table.length - 1][0]) + 1);
