@@ -27,6 +27,11 @@ public class FileStorage {
 	 */
     public boolean createTable(String tableName, String... columns) throws Exception
     {
+        File directory = new File("data");
+
+        if (!directory.exists())
+            directory.mkdirs();
+
         File f = new File("data", hlp.tableNameLoc(tableName));
 
         try 
@@ -36,11 +41,11 @@ public class FileStorage {
             f.createNewFile();
             try (BufferedWriter write = new BufferedWriter(new FileWriter(f)))
             {
-                for (int i = 0; i < columns.length; i++) {
+                for (int i = 0; i < columns.length; i++)
+                {
                     write.write(columns[i]);
                     if (i + 1 != columns.length)
                         write.write("\t\t\t" + this.seperator);
-
                 }
                 write.write("=" + columns.length);
                 write.newLine();
@@ -50,7 +55,7 @@ public class FileStorage {
             }
             return (true);
         } 
-        catch (IOException e){
+        catch (IOException e) {
             return false;
         }
     }
@@ -155,7 +160,8 @@ public class FileStorage {
             int colsNo = Integer.parseInt(fileLines[0].split("=")[1]);
             String[][] table = new String[rowsNo][colsNo];
 
-            for (int i = 2; i < fileLines.length; i++) {
+            for (int i = 2; i < fileLines.length; i++)
+            {
                 String[] words = fileLines[i].split("\\" + this.seperator);
 
                 for (int j = 0; j < colsNo; j++)
@@ -222,6 +228,8 @@ public class FileStorage {
     {
         return (this.read(tableName, columns, values, false));
     }
+
+
     /**
 	 * Read a row from the table with a specific condition
 	 *
