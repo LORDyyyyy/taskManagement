@@ -245,9 +245,10 @@ public class FileStorage {
 
             for (int i = 0; i < columns.length; i++)
             {
-                fixedHeaderRow += columns[i];
+                String cleanColName = columns[i].strip();
+                fixedHeaderRow += cleanColName;
                 if (i + 1 != columns.length)
-                    fixedHeaderRow += hlp.printCell(columns[i], this.cellWidth) + this.seperator;
+                    fixedHeaderRow += hlp.printCell(cleanColName, this.cellWidth) + this.seperator;
             }
             headerLines[0] = fixedHeaderRow;
 

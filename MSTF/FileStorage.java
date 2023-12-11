@@ -13,38 +13,18 @@ public class FileStorage {
 
     private String seperator = "|";
     private Helpers hlp = new Helpers();
-    public int cellWidth = 32;
-
-    /**
-     * The constructor method for the FileStorage Class
-     * 
-     * @param cellWidth - The width of the table's cell
-     */
-    public FileStorage (int cellWidth)
-    {
-        this.cellWidth = cellWidth;
-    }
-
-    /**
-     * The constructor method for the FileStorage Class
-     * 
-     */
-    public FileStorage()
-    {
-        // Hello!
-    };
 
 
-    /**
-     * Creates a new table/file with the passed paramters as the columns' names
-     *
-     * @param tableName Table name aka File name aka Class name.
-     * @param columns the columns to add to the table
-     *
-     * @return true on success, false otherwise
-     *
-     * @throws Exception An error with file/values
-     */
+	/**
+	 * Creates a new table/file with the passed paramters as the columns' names
+	 *
+	 * @param tableName Table name aka File name aka Class name.
+	 * @param columns the columns to add to the table
+	 *
+	 * @return true on success, false otherwise
+	 *
+	 * @throws Exception An error with file/values
+	 */
     public boolean createTable(String tableName, String... columns) throws Exception
     {
         File directory = new File("data");
@@ -65,18 +45,12 @@ public class FileStorage {
                 {
                     write.write(columns[i]);
                     if (i + 1 != columns.length)
-                        write.write(hlp.printCell(columns[i], this.cellWidth) + this.seperator);
+                        write.write("\t\t\t" + this.seperator);
                 }
                 write.write("=" + columns.length);
                 write.newLine();
-                
-                for (int i = 0; i < columns.length; i++)
-                {
-                    for (int j = 0; j < this.cellWidth; j++)
-                        write.write("-");
-                    if (i + 1 != columns.length)
-                        write.write(this.seperator);
-                }
+                for (int j = 0; j < 10 * (columns.length + 4); j++)
+                    write.write("-");
                 write.flush();
             }
             return (true);
@@ -135,13 +109,11 @@ public class FileStorage {
 	 */
     private int write(String tableName, String[][] table)
     {
-        if (hlp.isEmptyTable(table))
-                return (1);
         try {
             String[] header = this.readHeader(tableName);
             File file = new File("data", hlp.tableNameLoc(tableName));
             BufferedWriter write = new BufferedWriter(new FileWriter(file));
-            
+
             write.write(header[0] + '\n');
             write.write(header[1] + '\n');
 
@@ -151,7 +123,7 @@ public class FileStorage {
                 {
                     write.write(row[i]);
                     if (i + 1 != row.length)
-                        write.write(hlp.printCell(row[i], this.cellWidth) + this.seperator);
+                        write.write("\t\t\t" + this.seperator);
                 }
                 write.newLine();
                 write.flush();
@@ -163,15 +135,6 @@ public class FileStorage {
         }
     }
 
-    /**
-     * Reload a table and adjust the cells width.
-     * 
-     * @param tableName - Table name aka File name aka Class name.
-     */
-    public void reload(String tableName)
-    {
-        this.write(tableName, this.read(tableName));
-    }
 
     /**
      * Reads all rows from a file
@@ -194,7 +157,7 @@ public class FileStorage {
             if (rowsNo <= 0)
                 return (new String[0][0]);
 
-            int colsNo = Integer.parseInt(fileLines[0].split("=")[1].strip());
+            int colsNo = Integer.parseInt(fileLines[0].split("=")[1]);
             String[][] table = new String[rowsNo][colsNo];
 
             for (int i = 2; i < fileLines.length; i++)
@@ -240,26 +203,6 @@ public class FileStorage {
                 lineCount++;
             }
 
-            String fixedHeaderRow = new String();
-            String[] columns = headerLines[0].split("\\" + this.seperator);
-
-            for (int i = 0; i < columns.length; i++)
-            {
-                fixedHeaderRow += columns[i];
-                if (i + 1 != columns.length)
-                    fixedHeaderRow += hlp.printCell(columns[i], this.cellWidth) + this.seperator;
-            }
-            headerLines[0] = fixedHeaderRow;
-
-            fixedHeaderRow = "";
-            for (int i = 0; i < columns.length; i++)
-            {
-                for (int j = 0; j < this.cellWidth; j++)
-                    fixedHeaderRow += "-";
-                if (i + 1 != columns.length)
-                    fixedHeaderRow += this.seperator;
-            }
-            headerLines[1] = fixedHeaderRow;
             bf.close();
             return (headerLines);
         }
@@ -384,7 +327,7 @@ public class FileStorage {
             for (int i = 0; i < values.length; i++) {
                 write.write(values[i]);
                 if (i + 1 != values.length)
-                    write.write(hlp.printCell(values[i], this.cellWidth) + this.seperator);
+                    write.write("\t\t\t" + this.seperator);
             }
             write.newLine();
             write.flush();
