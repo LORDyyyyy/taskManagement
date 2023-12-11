@@ -1,15 +1,16 @@
 public class Main {
     public static void main(String[] args) throws Exception
     {
-        FileStorage fs = new FileStorage(64);
+        FileStorage fs = new FileStorage();
         Helpers hlp = new Helpers();
 
 
-        // fs.createTable("task", "id", "task_id");
+        // fs.createTable("alo", "id", "task_id");
         // fs.reload("task");
-        fs.createTable("projects","project_id","project_title","project_description","project_startTime","project_endtime");
-        System.out.println("file has successfulyy created");
-        fs.add("projects", hlp.paramsToArr("try", "a try", "1/11", "2/11", 6));
+        // fs.createTable("tasklog","task_log_id","task_id","emp_id","start_date","finish_date", "duration");
+        // System.out.println("file has successfulyy created");
+        // fs.reload("alo");
+        fs.add("tasklog", hlp.paramsToArr(fs.getNextID("tasklog"), fs.getNextID("tasklog"), "88", "null", "null", "null"));
 
         // System.out.println("." + hlp.printCell("id", 16) + ".");
 

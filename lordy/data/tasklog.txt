@@ -1,0 +1,13 @@
+task_log_id                     |task_id                         |emp_id                          |start_date                      |finish_date                     |duration=6
+--------------------------------|--------------------------------|--------------------------------|--------------------------------|--------------------------------|--------------------------------
+1                               |1                               |123                             |null                            |null                            |null
+2                               |2                               |123                             |null                            |null                            |null
+3                               |3                               |123                             |null                            |null                            |null
+4                               |4                               |123                             |null                            |null                            |null
+5                               |5                               |123                             |null                            |null                            |null
+6                               |6                               |555                             |null                            |null                            |null
+7                               |7                               |555                             |null                            |null                            |null
+8                               |8                               |897                             |null                            |null                            |null
+9                               |9                               |88                              |null                            |null                            |null
+10                              |10                              |88                              |null                            |null                            |null
+11                              |11                              |88                              |null                            |null                            |null
