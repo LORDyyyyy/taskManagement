@@ -5,6 +5,15 @@ public class Main {
         Helpers hlp = new Helpers();
 
 
+        // fs.createTable("task", "id", "task_id");
+        fs.reload("task");
+
+
+        // System.out.println("." + hlp.printCell("id", 16) + ".");
+
+        // System.out.println((1.0f / 0));
+
+
         // Get a record from a table, specify the columns to check, and the values to compare
         
 
@@ -47,7 +56,7 @@ public class Main {
         // System.out.println("error!");
         
 
-        // fs.add("emp", Helpers.paramsToArr(fs.getNextID("emp"), "khalid", "password122155"));
+        // fs.add("emp", hlp.paramsToArr(fs.getNextID("emp"), "ali", "password122155"));
         // String[][] res = fs.read("emp.txt", temp, Helpers.paramsToArr("khalid"));
         // int[] temp = new int[] {0, 1 };
         // int[] temp2 = new int[] {1, 2};
@@ -56,7 +65,8 @@ public class Main {
 
         // fs.add("emp", hlp.paramsToArr(1, "ahmed", "sadsa"));
 
-        // String[][] res = fs.read("emp", hlp.intToArr(1,2), hlp.paramsToArr("ahmed", "newPass"));
+        // SELECT * FROM emp WHERE column[0] = 5
+        // String[][] res = fs.read("emp", hlp.intToArr(0), hlp.paramsToArr(5));
 
         // fs.update("emp",
         //         hlp.intToArr(1), hlp.paramsToArr(881),
@@ -87,33 +97,35 @@ public class Main {
 
 
 
-        // fs.delete("emp", hlp.intToArr(0, 1), hlp.paramsToArr(3, "ahmed"));
+        fs.delete("emp", hlp.intToArr(0), hlp.paramsToArr(14));
 
 
-        // UPDATE emp SET name = Ahmed where ID = 3;
-        //                 column name index = 1
+        // UPDATE emp SET name = ahmed AND password = newpass WHERE ID = 3 ;
         //                  columns id index = 0
+        //                  column name index = 1
+        //                  column password index = 2
         fs.update("emp",
-                hlp.intToArr(1),
-                hlp.paramsToArr("ALOOOOOO"),
-                hlp.intToArr(1),
-                hlp.paramsToArr("NOOOOOOOO"));
+                    hlp.intToArr(0),
+                    hlp.paramsToArr(15),
+                    hlp.intToArr(2),
+                    hlp.paramsToArr( "newpass")
+                );
 
 
 
 
         // System.out.println();
         // fs.add("emp", hlp.paramsToArr(fs.getNextID("emp"), "ali mohammed", "newPass"));
-        // String[][] res = fs.read("emp");
+        String[][] res = fs.read("emp",  hlp.intToArr(1), hlp.paramsToArr("khalid"));
 
-        // for (String[] row : res)
-        // {
-        //     for (String value : row)
-        //     {
-        //         System.out.print("(" + value + ")" + " \t    | ");
-        //     }
-        //     System.out.println();
-        // }
+        for (String[] row : res)
+        {
+            for (String value : row)
+            {
+                System.out.print("(" + value + ")" + " \t    | ");
+            }
+            System.out.println();
+        }
 
         // System.out.println(fs.toString()); // TODO
     }
