@@ -95,7 +95,7 @@ public class Main {
         //                  columns id index = 0
         fs.update("emp",
                 hlp.intToArr(1),
-                hlp.paramsToArr("ALOOOOOO"),
+                hlp.paramsToArr("mo"),
                 hlp.intToArr(1),
                 hlp.paramsToArr("NOOOOOOOO"));
 
