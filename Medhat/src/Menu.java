@@ -47,7 +47,7 @@ public class Menu {
     	System.out.println("---------------------------");
     	System.out.println("1 => Send a Mission Request"
     			+ "\n" + "2 => Send a Vacation Request"
-    			+ "\n" +   "3 => Timecards\n");
+    			+ "\n" +   "3 => Task log\n");
 	}
 	
 	
