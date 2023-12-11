@@ -31,7 +31,7 @@ public class FileStorage {
      */
     public FileStorage()
     {
-        // Hello!
+        // this.cellWidth = 32;
     };
 
 

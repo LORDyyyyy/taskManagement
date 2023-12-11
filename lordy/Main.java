@@ -1,13 +1,13 @@
 public class Main {
     public static void main(String[] args) throws Exception
     {
-        FileStorage fs = new FileStorage();
+        FileStorage fs = new FileStorage(32);
         Helpers hlp = new Helpers();
         Menu menu = new Menu();
 
         menu.MainMenu();
-
-
+        // fs.reload("task");
+        // fs.add("task", hlp.paramsToArr(1, 5));
 
         // menu.EmployeeMenu();
         // menu.AdminMenu();
@@ -15,7 +15,7 @@ public class Main {
         // menu.ProjectsMenu();
         // menu.TasksMenu();
 
-        // fs.createTable("alo", "id", "task_id");
+        // fs.createTable("task", "id", "task_id");
         // fs.reload("task");
         // fs.createTable("tasklog","task_log_id","task_id","emp_id","start_date","finish_date", "duration");
         // System.out.println("file has successfulyy created");
