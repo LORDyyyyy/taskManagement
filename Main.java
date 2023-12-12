@@ -5,7 +5,13 @@ public class Main {
         Helpers hlp = new Helpers();
         Menu menu = new Menu();
 
-        menu.MainMenu();
+        // menu.MainMenu();
+        Employee employee = new Employee("Mostafa", "234234");
+        Leader lead = new Leader("Mostafa", "234234", "MO@gmial");
+        System.out.println(employee.getId());
+        // employee.add("emp");
+        Admin admin = new Admin();
+        admin.add("MOhamed", "3423342", "pdpa");
         // Leader leed = new Leader("Mokhter", "2323232", "mo5tar@gmail.com");
         // fs.add("leader", hlp.paramsToArr(leed.getId(), leed.getName(), leed.getPassword(), leed.getEmail()));
         // System.out.println(leed.login("MOSTAFA","232423" , "leader"));

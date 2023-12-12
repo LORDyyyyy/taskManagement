@@ -1,8 +1,8 @@
-public class Person {
+public abstract class Person {
     private int ID;
     private String name, password;
-    private FileStorage fs = new FileStorage();
-    private Helpers hlp = new Helpers();
+    protected FileStorage fs = new FileStorage();
+    protected Helpers hlp = new Helpers();
 
     public Person() {
     }
@@ -33,6 +33,9 @@ public class Person {
         return password;
     }
 
+    public void add(String nameFile) throws Exception {
+        fs.add(nameFile, hlp.paramsToArr(getId(), getName(), getPassword()));
+    }
 
     public boolean login(String name, String password, String nameFile) throws Exception {
         String[][] res = fs.read(nameFile, hlp.intToArr(1, 2), hlp.paramsToArr(getName(), getPassword()));
@@ -43,32 +46,4 @@ public class Person {
         }
         return false;
     }
-
-    public void add(String nameFile) throws Exception {
-        fs.add(nameFile, hlp.paramsToArr(getId(), getName(), getPassword()));
-    }
-
-    public boolean update(int ID, String name, String nameFile) throws Exception {
-        String[][] res = fs.read(nameFile, hlp.intToArr(0), hlp.paramsToArr(ID));
-        for (String[] row : res) {
-            if (Integer.parseInt(row[0]) == ID) {
-                setName(name);
-                fs.update(nameFile, hlp.intToArr(0), hlp.paramsToArr(ID), hlp.intToArr(1), hlp.paramsToArr(name));
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public boolean delete(int ID, String nameFile) throws Exception {
-        String[][] res = fs.read(nameFile, hlp.intToArr(0), hlp.paramsToArr(ID));
-        for (String[] row : res) {
-            if (Integer.parseInt(row[0]) == ID) {
-                fs.delete(nameFile, hlp.intToArr(0), hlp.paramsToArr(ID));
-                return true;
-            }
-        }
-        return false;
-    }
-    
 }
