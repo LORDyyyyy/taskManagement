@@ -46,17 +46,23 @@ public class test {
         // Add to "task_log" file with the auto-incremented value of id from "tasks"
         // file
         project.fs.add("task_log",
-                project.hlp.paramsToArr(null,project.tasks[index].getId(), null, null, null, null));
+                project.hlp.paramsToArr(null, project.tasks[index].getId(), null, null, null, null));
     }
 
     public void deleteTask(int task_id) throws Exception {
+        System.err.println("i am here");
         // Delete from "tasks" file
+        for (String[] row : project.fs.read("tasks", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id)))
+        {
+            for (String val: row)
+                System.out.print(val + " - ");
+                System.out.println();
+        }
         project.fs.delete("tasks", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id));
-    
+
         // Delete from "task_log" file based on the task_id
-        project.fs.delete("task_log", project.hlp.intToArr(1), project.hlp.paramsToArr(task_id));    }
-
-
+        project.fs.delete("task_log", project.hlp.intToArr(1), project.hlp.paramsToArr(task_id));
+    }
 
     public void updateTask(int task_id, int column, String newvalue) throws Exception {
         project.fs.update("tasks", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id),
@@ -79,8 +85,9 @@ public class test {
         // try{
         // leader mstf=new leader();
         test mstf2 = new test();
-        // mstf2.addTask("mstf_task", "moataaz", "27/11", "1/12", "working on", "9 hours", "important", 1, mstf2.id);
-        mstf2.deleteTask(2);
+        // mstf2.addTask("mstf_task", "moataaz", "27/11", "1/12", "working on", "9
+        // hours", "important", 1, mstf2.id);
+        mstf2.deleteTask(5);
         // mstf2.updateTask(2, 4, "new try");
         // mstf2.addeProject("3try", "a try", "1/11", "2/11", 6);
         // mstf2.updateProject(1, 1,"mstf");
