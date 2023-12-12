@@ -1,15 +1,41 @@
 public class Main {
     public static void main(String[] args) throws Exception
     {
-        FileStorage fs = new FileStorage(64);
+        FileStorage fs = new FileStorage(32);
         Helpers hlp = new Helpers();
+        Menu menu = new Menu();
 
+        menu.MainMenu();
+        // Leader leed = new Leader("Mokhter", "2323232", "mo5tar@gmail.com");
+        // fs.add("leader", hlp.paramsToArr(leed.getId(), leed.getName(), leed.getPassword(), leed.getEmail()));
+        // System.out.println(leed.login("MOSTAFA","232423" , "leader"));
+        // Leader leed = new Leader("MOSTAFA", "232423", "mo5t@gmail.com");
+        // System.out.println(leed.update(11 , "MO", "leader"));
+
+        // fs.reload("admin");
+        // fs.add("admin", hlp.paramsToArr(1, 2));
+        // fs.createTable("admin", "Name", "Password");
+        // Admin admin = new Admin();
+        // System.out.println (admin.login("Moa", "1231", "admin"));
+
+
+
+
+        // fs.reload("task");
+        // fs.add("task", hlp.paramsToArr(1, 5));
+
+        // menu.EmployeeMenu();
+        // menu.AdminMenu();
+        // menu.LeadersMenu();
+        // menu.ProjectsMenu();
+        // menu.TasksMenu();
 
         // fs.createTable("task", "id", "task_id");
         // fs.reload("task");
-        fs.createTable("projects","project_id","project_title","project_description","project_startTime","project_endtime");
-        System.out.println("file has successfulyy created");
-        fs.add("projects", hlp.paramsToArr("try", "a try", "1/11", "2/11", 6));
+        // fs.createTable("tasklog","task_log_id","task_id","emp_id","start_date","finish_date", "duration");
+        // System.out.println("file has successfulyy created");
+        // fs.reload("alo");
+        // fs.add("tasklog", hlp.paramsToArr(fs.getNextID("tasklog"), fs.getNextID("tasklog"), "88", "null", "null", "null"));
 
         // System.out.println("." + hlp.printCell("id", 16) + ".");
 
