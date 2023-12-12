@@ -1,8 +1,0 @@
-id                              |name                            |password                        |email=4
---------------------------------|--------------------------------|--------------------------------|--------------------------------
-3                               |man                             |yes                             |mlord6271@yahoo.com
-11                              |MO                              |password122155                  |mail@mail.com
-12                              |MOSTAFA                         |232423                          |232423
-13                              |MOSTAFA                         |232423                          |mo5t@gmail.com
-14                              |MOSTAFA                         |232423                          |mo5t@gmail.com
-15                              |Mokhter                         |2323232                         |mo5tar@gmail.com
