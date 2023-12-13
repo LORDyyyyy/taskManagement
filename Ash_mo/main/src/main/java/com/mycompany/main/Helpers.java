@@ -1,7 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.main;
 import java.util.Arrays;
 
+/**
+ *
+ * @author Ahmed Shaaban
+ */
 public class Helpers {
-	
 	/**
 	 * Takes an unknown number and data type of parameters
 	 * and convert them to a String Array
@@ -53,7 +61,7 @@ public class Helpers {
 			return (tableName.toLowerCase());
 		return (tableName.toLowerCase() + ".txt");
 	}
-
+	
 
 	/**
 	 * Get the max element in an array of integers
@@ -66,7 +74,7 @@ public class Helpers {
 	{
 		return ( Arrays.stream(array).max().orElse(0));
 	}
-
+	
 
 	/**
 	 * No need to make a documentation.
@@ -83,7 +91,7 @@ public class Helpers {
 					return false;
 		return true;
 	}
-
+	
 
 	/**
 	 * Remove the null Rows from a table
@@ -96,27 +104,33 @@ public class Helpers {
 	{
 		if (table.length == 0)
 			return (new String[0][0]);
-		int colNo = table[0].length;
+        int colNo = table[0].length;
 		int countNotNull = 0;
-
-		for (String[] row : table) {
-			boolean flagNullRow = true;
-			for (String value : row) {
-				if (value != null) {
+		
+		for (String[] row : table)
+		{
+            boolean flagNullRow = true;
+			for (String value : row) 
+			{
+				if (value != null)
+				{
 					flagNullRow = false;
 					break;
 				}
-			}
-			if (!flagNullRow)
-				countNotNull++;
-		}
-		String[][] resultArray = new String[countNotNull][colNo];
+            }
+            if (!flagNullRow)
+                countNotNull++;
+        }
+        String[][] resultArray = new String[countNotNull][colNo];
 		int resultRowIndex = 0;
-
-		for (String[] row : table) {
+		
+		for (String[] row : table)
+		{
 			boolean flagNullRow = true;
-			for (String cell : row) {
-				if (cell != null) {
+			for (String cell : row)
+			{
+				if (cell != null)
+				{
 					flagNullRow = false;
 					break;
 				}
@@ -124,25 +138,7 @@ public class Helpers {
 			if (!flagNullRow)
 				resultArray[resultRowIndex++] = row;
 		}
-
-		return (resultArray);
-	}
-
-
-	/**
-	 * Get the number of spaces that should be printed in the cell after the cell's value.
-	 * 
-	 * @param cellValue
-	 * @param cellWidth
-	 * @return A string contains the right number of spaces
-	 */
-	public String printCell(String cellValue, int cellWidth)
-	{
-		String spaces = new String();
-
-		for (int i = 0; i < Math.abs(cellWidth - cellValue.length()); i++)
-			spaces += " ";
-
-		return (spaces);
-	}
+		
+        return (resultArray);
+    }
 }

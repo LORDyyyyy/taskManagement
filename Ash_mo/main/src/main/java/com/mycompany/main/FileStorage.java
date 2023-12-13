@@ -1,57 +1,36 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.main;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
-
 /**
- * @author: LORDy
+ *
+ * @author Ahmed Shaaban
  */
 public class FileStorage {
-
+    
     private String seperator = "|";
     private Helpers hlp = new Helpers();
-    public int cellWidth = 32;
-
-    /**
-     * The constructor method for the FileStorage Class
-     * 
-     * @param cellWidth - The width of the table's cell
-     */
-    public FileStorage (int cellWidth)
-    {
-        this.cellWidth = cellWidth;
-    }
-
-    /**
-     * The constructor method for the FileStorage Class
-     * 
-     */
-    public FileStorage()
-    {
-        // this.cellWidth = 32;
-    };
 
 
-    /**
-     * Creates a new table/file with the passed paramters as the columns' names
-     *
-     * @param tableName Table name aka File name aka Class name.
-     * @param columns the columns to add to the table
-     *
-     * @return true on success, false otherwise
-     *
-     * @throws Exception An error with file/values
-     */
+	/**
+	 * Creates a new table/file with the passed paramters as the columns' names
+	 *
+	 * @param tableName Table name aka File name aka Class name.
+	 * @param columns the columns to add to the table
+	 *
+	 * @return true on success, false otherwise
+	 *
+	 * @throws Exception An error with file/values
+	 */
     public boolean createTable(String tableName, String... columns) throws Exception
     {
-        File directory = new File("data");
-
-        if (!directory.exists())
-            directory.mkdirs();
-
         File f = new File("data", hlp.tableNameLoc(tableName));
 
         try 
@@ -61,27 +40,21 @@ public class FileStorage {
             f.createNewFile();
             try (BufferedWriter write = new BufferedWriter(new FileWriter(f)))
             {
-                for (int i = 0; i < columns.length; i++)
-                {
+                for (int i = 0; i < columns.length; i++) {
                     write.write(columns[i]);
                     if (i + 1 != columns.length)
-                        write.write(hlp.printCell(columns[i], this.cellWidth) + this.seperator);
+                        write.write("\t\t\t" + this.seperator);
+
                 }
                 write.write("=" + columns.length);
                 write.newLine();
-                
-                for (int i = 0; i < columns.length; i++)
-                {
-                    for (int j = 0; j < this.cellWidth; j++)
-                        write.write("-");
-                    if (i + 1 != columns.length)
-                        write.write(this.seperator);
-                }
+                for (int j = 0; j < 10 * (columns.length + 4); j++)
+                    write.write("-");
                 write.flush();
             }
             return (true);
         } 
-        catch (IOException e) {
+        catch (IOException e){
             return false;
         }
     }
@@ -135,13 +108,11 @@ public class FileStorage {
 	 */
     private int write(String tableName, String[][] table)
     {
-        if (hlp.isEmptyTable(table))
-                return (1);
         try {
             String[] header = this.readHeader(tableName);
             File file = new File("data", hlp.tableNameLoc(tableName));
             BufferedWriter write = new BufferedWriter(new FileWriter(file));
-            
+
             write.write(header[0] + '\n');
             write.write(header[1] + '\n');
 
@@ -151,7 +122,7 @@ public class FileStorage {
                 {
                     write.write(row[i]);
                     if (i + 1 != row.length)
-                        write.write(hlp.printCell(row[i], this.cellWidth) + this.seperator);
+                        write.write("\t\t\t" + this.seperator);
                 }
                 write.newLine();
                 write.flush();
@@ -163,15 +134,6 @@ public class FileStorage {
         }
     }
 
-    /**
-     * Reload a table and adjust the cells width.
-     * 
-     * @param tableName - Table name aka File name aka Class name.
-     */
-    public void reload(String tableName)
-    {
-        this.write(tableName, this.read(tableName));
-    }
 
     /**
      * Reads all rows from a file
@@ -194,11 +156,10 @@ public class FileStorage {
             if (rowsNo <= 0)
                 return (new String[0][0]);
 
-            int colsNo = Integer.parseInt(fileLines[0].split("=")[1].strip());
+            int colsNo = Integer.parseInt(fileLines[0].split("=")[1]);
             String[][] table = new String[rowsNo][colsNo];
 
-            for (int i = 2; i < fileLines.length; i++)
-            {
+            for (int i = 2; i < fileLines.length; i++) {
                 String[] words = fileLines[i].split("\\" + this.seperator);
 
                 for (int j = 0; j < colsNo; j++)
@@ -240,27 +201,6 @@ public class FileStorage {
                 lineCount++;
             }
 
-            String fixedHeaderRow = new String();
-            String[] columns = headerLines[0].split("\\" + this.seperator);
-
-            for (int i = 0; i < columns.length; i++)
-            {
-                String cleanColName = columns[i].strip();
-                fixedHeaderRow += cleanColName;
-                if (i + 1 != columns.length)
-                    fixedHeaderRow += hlp.printCell(cleanColName, this.cellWidth) + this.seperator;
-            }
-            headerLines[0] = fixedHeaderRow;
-
-            fixedHeaderRow = "";
-            for (int i = 0; i < columns.length; i++)
-            {
-                for (int j = 0; j < this.cellWidth; j++)
-                    fixedHeaderRow += "-";
-                if (i + 1 != columns.length)
-                    fixedHeaderRow += this.seperator;
-            }
-            headerLines[1] = fixedHeaderRow;
             bf.close();
             return (headerLines);
         }
@@ -286,8 +226,6 @@ public class FileStorage {
     {
         return (this.read(tableName, columns, values, false));
     }
-
-
     /**
 	 * Read a row from the table with a specific condition
 	 *
@@ -378,14 +316,16 @@ public class FileStorage {
     {
         File file = new File("data", hlp.tableNameLoc(tableName));
 
-        try (BufferedWriter write = new BufferedWriter(new FileWriter(file, true))) {
+        try (BufferedWriter write = new BufferedWriter(new FileWriter(file, true)))
+        {
             if (values.length != this.getTableColsNo(tableName))
                 throw new Exception("Invalid number of values to insert...");
 
-            for (int i = 0; i < values.length; i++) {
+            for (int i = 0; i < values.length; i++)
+            {
                 write.write(values[i]);
                 if (i + 1 != values.length)
-                    write.write(hlp.printCell(values[i], this.cellWidth) + this.seperator);
+                    write.write("\t\t\t" + this.seperator);
             }
             write.newLine();
             write.flush();
@@ -394,7 +334,7 @@ public class FileStorage {
     }
 
 
-    /**
+	/**
 	 * Update a row's value in the table
 	 *
 	 * @param tableName - Table name aka File name aka Class name.
@@ -408,25 +348,6 @@ public class FileStorage {
 	 * @throws Exception an error with file/values
 	 */
     public int update(String tableName, int[] columns, String[] values, int[] newCols, String[] newValues) throws Exception
-    {
-        return (this.update(tableName, columns, values, newCols, newValues, false, Integer.MAX_VALUE));
-    }
-	/**
-     * Update a row's value in the table
-     *
-     * @param tableName - Table name aka File name aka Class name.
-     * @param columns - The columns index which will be checked by a condition
-     * @param values - The condition value
-     * @param newCols - The new columns index which will be updated
-     * @param newValues - The new values
-     * @param backwards - true | false, weather to loop from the start or the end. default is false
-     * @param count - How many values do you want to update? default is INT_MAX
-     *
-     * @return 0 on success, 1 otherwise
-     *
-     * @throws Exception an error with file/values
-     */
-    public int update(String tableName, int[] columns, String[] values, int[] newCols, String[] newValues, boolean backwards, int count) throws Exception
     {
         String[][] table = this.read(tableName);
         int colsNo = this.getTableColsNo(tableName);
@@ -442,17 +363,14 @@ public class FileStorage {
                 throw new Exception("""
                                         Number of Columns to compare
                                         is not equal to Number of values!
-                        """);
+                                    """);
 
-        int start = backwards ? table.length - 1 : 0;
-        int end = backwards ? 0 : table.length;
-        int iteratorNewValue = backwards ? -1 : 1;
-
-        for (int row = start; backwards ? row >= end : row < end; row += iteratorNewValue)
+        for (String[] row : table)
         {
             boolean flag = false;
-            for (int i = 0; i < columns.length; i++) {
-                if (table[row][columns[i]].equals(values[i]))
+            for (int i = 0; i < columns.length; i++)
+            {
+                if (row[columns[i]].equals(values[i]))
                     flag = true;
                 else
                 {
@@ -461,14 +379,9 @@ public class FileStorage {
                 }
             }
             if (flag)
-            {
                 for (int i = 0; i < newCols.length; i++)
-                    table[row][newCols[i]] = newValues[i];
-                if (--count == 0)
-                    break;
-            }
+                    row[newCols[i]] = newValues[i];
         }
-        
         return (this.write(tableName, table));
     }
 

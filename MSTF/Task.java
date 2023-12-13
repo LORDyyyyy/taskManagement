@@ -1,21 +1,23 @@
 public class Task extends information {
-  private employee assignedEmployee;
+  // private employee assignedEmployee;
   private String phase;
   private String estimationHours;
-  private int priority;
-  private String creatorName;
+  private String priority;
+  private int creatorId;
 
   public Task() {
     super();
-    id= fs.getNextID("tasks");
+    id = fs.getNextID("tasks");
   }
 
-  public Task(String title, String description, String starTime,String endTime,String phase, String estimationHours, int priority ) {
+  public Task(String title, String description, String starTime, String endTime, String phase, String estimationHours,
+      String priority, int creatorId) {
     super(title, description, starTime, endTime);
     this.phase = phase;
     this.estimationHours = estimationHours;
     this.priority = priority;
-    id= fs.getNextID("tasks");
+    id = fs.getNextID("tasks");
+    this.creatorId = creatorId;
   }
 
   public String getPhase() {
@@ -34,12 +36,15 @@ public class Task extends information {
     this.estimationHours = estimationHours;
   }
 
-  public int getPriority() {
+  public String getPriority() {
     return priority;
   }
 
-  public void setPriority(int priority) {
+  public void setPriority(String priority) {
     this.priority = priority;
   }
 
+  public int getCreatorId() {
+    return creatorId;
+  }
 }

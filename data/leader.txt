@@ -1,5 +1,0 @@
-id          |name           |password           |email=4
-------------|---------------|-------------------|--------
-3			|man			|yes			|mlord6271@yahoo.com
-10			|khalid			|password122155			|mail@mail.com
-11			|khalid			|password122155			|mail@mail.com

@@ -4,12 +4,55 @@ public class Main {
         FileStorage fs = new FileStorage();
         Helpers hlp = new Helpers();
 
+        // Menu menu = new Menu();
+
+        // menu.MainMenu();
+
+        // fs.createTable("test", "id", "name");
+        // fs.add("test", hlp.paramsToArr("4", "ali"));
+        // fs.add("test", hlp.paramsToArr("5", "ahmed"));
+        // fs.add("test", hlp.paramsToArr("6", "a"));
+
+        fs.update("test", hlp.intToArr(0), hlp.paramsToArr(4), hlp.intToArr(1), hlp.paramsToArr("66656"));
+
+        // fs.delete("test", hlp.intToArr(0), hlp.paramsToArr(6));
+
+        // fs.delete("tmp", hlp.intToArr(0), hlp.paramsToArr(5));
+
+        // String[][] res = fs.read("test.txt", hlp.intToArr(0), hlp.paramsToArr("5"), true);
+        // for (String[] row : res)
+        // {
+        //     for (String value : row) {
+        //         System.out.print("(" + value + ")" + " \t    | ");
+        //     }
+        //     System.out.println();
+        // }
+
+
+        // Admin admin = new Admin("mohamed", "12345");
+
+        // if (admin.login("mohamed", "12345"))
+        //     System.out.println("wel");
+        // else
+        //     System.out.println("no");
+
+        // admin.add("asdsad", "1423456", "emp");
+
+        // fs.reload("task");
+        // fs.add("task", hlp.paramsToArr(1, 5));
+
+        // menu.EmployeeMenu();
+        // menu.AdminMenu();
+        // menu.LeadersMenu();
+        // menu.ProjectsMenu();
+        // menu.TasksMenu();
 
         // fs.createTable("task", "id", "task_id");
-        fs.reload("task");
-        fs.createTable("projects","project_id","project_title","project_description","project_startTime","project_endtime");
-        System.out.println("file has successfulyy created");
-// addeProject("try", "a try", "1/11", "2/11", 6);
+        // fs.reload("task");
+        // fs.createTable("tasklog","task_log_id","task_id","emp_id","start_date","finish_date", "duration");
+        // System.out.println("file has successfulyy created");
+        // fs.reload("alo");
+        // fs.add("tasklog", hlp.paramsToArr(fs.getNextID("tasklog"), fs.getNextID("tasklog"), "88", "null", "null", "null"));
 
         // System.out.println("." + hlp.printCell("id", 16) + ".");
 
@@ -31,14 +74,7 @@ public class Main {
 
 
 
-        // String[][] res = fs.read("emp.txt", temp, Helpers.paramsToArr("man"));
-        // for (String[] row : res)
-        // {
-        //     for (String value : row) {
-        //         System.out.print("(" + value + ")" + " \t    | ");
-        //     }
-        //     System.out.println();
-        // }
+
 
         // System.out.println("---------");
 

@@ -31,7 +31,7 @@ public class FileStorage {
      */
     public FileStorage()
     {
-        // Hello!
+        // this.cellWidth = 32;
     };
 
 
@@ -135,10 +135,12 @@ public class FileStorage {
 	 */
     private int write(String tableName, String[][] table)
     {
-        if (hlp.isEmptyTable(table))
-                return (1);
         try {
             String[] header = this.readHeader(tableName);
+
+            if (header.length == 0)
+                return (1);
+
             File file = new File("data", hlp.tableNameLoc(tableName));
             BufferedWriter write = new BufferedWriter(new FileWriter(file));
             
@@ -220,7 +222,7 @@ public class FileStorage {
 	 *
 	 * @return The 2 header lines of the table.
 	 */
-    public String[] readHeader(String tableName)
+    private String[] readHeader(String tableName)
     {
         this.clean(tableName);
         File file = new File("data", hlp.tableNameLoc(tableName));
@@ -245,9 +247,10 @@ public class FileStorage {
 
             for (int i = 0; i < columns.length; i++)
             {
-                fixedHeaderRow += columns[i];
+                String cleanColName = columns[i].strip();
+                fixedHeaderRow += cleanColName;
                 if (i + 1 != columns.length)
-                    fixedHeaderRow += hlp.printCell(columns[i], this.cellWidth) + this.seperator;
+                    fixedHeaderRow += hlp.printCell(cleanColName, this.cellWidth) + this.seperator;
             }
             headerLines[0] = fixedHeaderRow;
 
