@@ -1,4 +1,5 @@
 public abstract class Person {
+
     private int ID;
     private String name;
     private String password;
@@ -47,6 +48,7 @@ public abstract class Person {
         String[][] res = fs.read(this.table_name, hlp.intToArr(1, 2), hlp.paramsToArr(getName(), getPassword()));
         for (String[] row : res) {
             if (getName().equals(name) && getPassword().equals(password)) {
+                this.ID = Integer.parseInt(row[0]);
                 return true;
             }
         }
