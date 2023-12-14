@@ -6,6 +6,7 @@ public abstract class Person {
     protected FileStorage fs = new FileStorage();
     protected Helpers hlp = new Helpers();
 
+
     public Person(String filename) {
         this.table_name = filename;
     }

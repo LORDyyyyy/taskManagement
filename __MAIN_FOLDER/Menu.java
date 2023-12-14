@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import static ConsoleColors.ConsoleColors.*;
 
+
 public class Menu {
 
 	private Scanner input = new Scanner(System.in);
@@ -59,6 +60,7 @@ public class Menu {
 	/**
 	 * Check if the user's choice is right.
 	 *
+	 * @param Back - weather the user can go a step back or not.Z
 	 * @param input - The choice that the user entered
 	 * @param options - The option that the user should choice from.
 	 *
@@ -92,9 +94,9 @@ public class Menu {
 	public void MainMenu()
 	{
 		System.out.println(BLUE_BOLD + this.welcome + RESET);
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		System.out.println(BLUE_BOLD + "At any page, enter exit to quit the program, or enter back to go a step back." + RESET);
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		this.printOptions("Admin", "Leader", "Employee");
 
 		String answer = this.readWord("Your Choice:");
@@ -168,8 +170,8 @@ public class Menu {
 				this.AdminMenu();
 			}
 		} catch (Exception e) {
-				e.printStackTrace();
-			}
+			this.MainMenu();
+		}
 	}
 
 	/**
@@ -177,9 +179,9 @@ public class Menu {
 	 */
 	private void LeadersMenu()
 	{
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		System.out.println(BLUE_BOLD  + "Leader Menu" + RESET);
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		this.printOptions("Projects", "Requests", "Calendar");
 
 		String answer = this.readWord("Your Choice:");
@@ -214,9 +216,9 @@ public class Menu {
 
 	private void ProjectsMenu()
 	{
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		System.out.println(BLUE_BOLD  + "Projects Menu" + RESET);
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		this.printOptions("Show Current Projects", "Add", "Update", "Delete");
 
 		String answer = this.readWord("Your Choice:");
@@ -255,9 +257,9 @@ public class Menu {
 
 	private void ShowProjects()
 	{
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		System.out.println(BLUE_BOLD  + "Projects" + RESET);
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		this.printOptions("All projects will be here...");
 	}
 
@@ -281,10 +283,9 @@ public class Menu {
 
 	private void AdminMenu()
 	{
-		;
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		System.out.println(BLUE_BOLD + "Admin Menu" + RESET);
-		System.out.println(seperator);
+		System.out.println(this.seperator);
 		this.printOptions("Add Leaders/Employees", "Update Leaders/Employees", "Delete Leaders/Employees");
 
 		String answer = this.readWord("Your Choice:");
@@ -337,6 +338,8 @@ public class Menu {
 				System.out.println("Please Re enter the info." + RESET);
 				name = this.readWord("User name: ");
 				password = this.readWord("User Password: ");
+				if (name.equals("back") || password.equals("back"))
+					this.AdminMenu();
 			}
 
 			System.out.println(GREEN_BOLD + "User Added Successfully!" + RESET);
@@ -358,6 +361,9 @@ public class Menu {
 				System.out.println("Please Re enter the info." + RESET);
 				id = this.readWord("User ID: ");
 				name = this.readWord("User name: ");
+
+				if (name.equals("back"))
+					this.AdminMenu();
 			}
 
 			System.out.println(GREEN_BOLD + "User Updated Successfully!" + RESET);
@@ -376,6 +382,8 @@ public class Menu {
 				System.out.println(RED_BOLD + "An Error occured!");
 				System.out.println("Please Re enter the info." + RESET);
 				id = this.readWord("User ID: ");
+				if (id.equals("back"))
+					this.AdminMenu();
 			}
 
 			System.out.println(GREEN_BOLD + "User Deleted Successfully!" + RESET);

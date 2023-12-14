@@ -1,19 +1,18 @@
 public class Main {
     public static void main(String[] args) throws Exception
     {
-        FileStorage fs = new FileStorage();
-        Helpers hlp = new Helpers();
+        // FileStorage fs = new FileStorage();
+        // Helpers hlp = new Helpers();
 
-        // Menu menu = new Menu();
-
-        // menu.MainMenu();
+        Menu menu = new Menu();
+        menu.MainMenu();
 
         // fs.createTable("test", "id", "name");
         // fs.add("test", hlp.paramsToArr("4", "ali"));
         // fs.add("test", hlp.paramsToArr("5", "ahmed"));
         // fs.add("test", hlp.paramsToArr("6", "a"));
 
-        fs.update("test", hlp.intToArr(0), hlp.paramsToArr(4), hlp.intToArr(1), hlp.paramsToArr("66656"));
+        // fs.update("test", hlp.intToArr(0), hlp.paramsToArr(4), hlp.intToArr(1), hlp.paramsToArr("66656"));
 
         // fs.delete("test", hlp.intToArr(0), hlp.paramsToArr(6));
 
