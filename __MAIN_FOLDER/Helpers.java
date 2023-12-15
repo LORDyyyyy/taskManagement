@@ -7,7 +7,7 @@ public class Helpers {
 	
 	private Scanner input = new Scanner(System.in);
 
-	
+
 	/**
 	 * Takes an unknown number and data type of parameters
 	 * and convert them to a String Array
