@@ -1,5 +1,5 @@
 import static ConsoleColors.ConsoleColors.*;
-
+import java.io.Console;
 
 public class Menu {
 
@@ -68,8 +68,10 @@ public class Menu {
 	 */
 	private void Login(String type)
 	{
+		Console cnsl = System.console(); 
 		String name = hlp.readWord("Your name: ");
-		String password = hlp.readWord("Your Password: ");
+		// String password = hlp.readWord("Your Password: ");
+		String password = new String(cnsl.readPassword(YELLOW_BOLD + "Your Password: "));
 
 		try {
 			if (type.equals("emp"))
@@ -80,7 +82,7 @@ public class Menu {
 					System.out.println(RED_BOLD + "Account was not found!");
 					System.out.println("Please Re-enter your information or exit the program" + RESET);
 					emp.setName(hlp.readWord("Your name: "));
-					emp.setPassword(hlp.readWord("Your Password: "));
+					emp.setPassword(String.valueOf(cnsl.readPassword(YELLOW_BOLD + "Your Password: ")));
 				}
 				empMenu = new EmployeeMenu(emp);
 				emp = null;
@@ -95,7 +97,7 @@ public class Menu {
 					System.out.println(RED_BOLD + "Account was not found!");
 					System.out.println("Please Re-enter your information or exit the program" + RESET);
 					leader.setName(hlp.readWord("Your name: "));
-					leader.setPassword(hlp.readWord("Your Password: "));
+					leader.setPassword(String.valueOf(cnsl.readPassword(YELLOW_BOLD + "Your Password: ")));
 				}
 				leaderMenu = new LeaderMenu(leader);
 				leader = null;
@@ -110,7 +112,7 @@ public class Menu {
 					System.out.println(RED_BOLD + "Account was not found!");
 					System.out.println("Please Re-enter your information or exit the program" + RESET);
 					admin.setName(hlp.readWord("Your name: "));
-					admin.setPassword(hlp.readWord("Your Password: "));
+					admin.setPassword(String.valueOf(cnsl.readPassword(YELLOW_BOLD + "Your Password: ")));
 				}
 				adminMenu = new AdminMenu(admin);
 				admin = null;

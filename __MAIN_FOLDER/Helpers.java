@@ -186,7 +186,7 @@ public class Helpers {
 
 		System.out.print(RESET);
 
-		return (line);
+		return (line.strip());
 	}
 
 

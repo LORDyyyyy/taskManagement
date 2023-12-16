@@ -1,3 +1,6 @@
+import static ConsoleColors.ConsoleColors.*;
+
+
 public class Main {
     public static void main(String[] args) throws Exception
     {
@@ -6,6 +9,43 @@ public class Main {
 
         Menu menu = new Menu();
         menu.MainMenu();
+
+        // fs.createTable("request", "id","emp_id", "massage", "send date", "status");
+
+        // Employee emp = new Employee("asd", "qwe");
+
+        // emp.login(emp.getName(), emp.getPassword());
+
+        // emp.send("Hello PLEASE HELP ME");
+        // emp.send("Hello PLEASE HELP ME AGAIN");
+        // emp.send("give me money pls");
+
+        // for (String[] row: emp.seeRespond(emp.getId()))
+        // {
+        //     for (int i = 0; i < row.length; i++) {
+        //         System.out.printf("|%-30s", row[i]);
+        //     }
+        //     System.out.println("|");
+        // }
+
+
+
+        // Admin ad = new Admin("mohamed", "12345");
+
+        // System.out.print(BLACK_BACKGROUND + WHITE_BOLD);
+        // System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
+        // System.out.printf("|%-14s%-16s|%-13s%-17s|%-12s%-18s|\n", " ", "ID", " ", "Name", " " , "Password");
+        // System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
+        // for (String[] row: ad.read("emp"))
+        // {
+        //     for (int i = 0; i < row.length; i++)
+        //     {
+        //         System.out.printf("|%-30s", row[i]);
+        //     }
+        //     System.out.println("|");
+        // }
+        // System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
+        // System.out.print(RESET);
 
         // fs.createTable("test", "id", "name");
         // fs.add("test", hlp.paramsToArr("4", "ali"));

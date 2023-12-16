@@ -26,11 +26,11 @@ class AdminMenu extends Menu{
 		System.out.println(super.seperator);
 		System.out.println(BLUE_BOLD + "Admin Menu" + RESET);
 		System.out.println(super.seperator);
-        hlp.printOptions("Add Leaders/Employees", "Update Leaders/Employees", "Delete Leaders/Employees");
+        hlp.printOptions("Add Leaders/Employees", "Update Leaders/Employees", "Delete Leaders/Employees", "Show Leaders/Employees");
         // System.out.println(admin.getId());
 		String answer = hlp.readWord("Your Choice:");
         
-		while (!hlp.rightInput(true, answer, 1, 2, 3, "add", "update", "delete"))
+		while (!hlp.rightInput(true, answer, 1, 2, 3, 4, "add", "update", "delete", "show"))
 		{
 			System.out.println(errMessage);
 			answer = hlp.readWord("Your Choice:");
@@ -44,11 +44,11 @@ class AdminMenu extends Menu{
                 return;
 		}
 
-		String answer2 = hlp.readWord("User Type (leader/employee):");
+		String answer2 = hlp.readWord("User Type (leader/employee):").toLowerCase();
 		while (!hlp.rightInput(false, answer2, 1, 2, "leader", "employee"))
 		{
 			System.out.println(errMessage);
-			answer2 = hlp.readWord("Your Choice:");
+			answer2 = hlp.readWord("Your Choice:").toLowerCase();
 		}
 		String type = (answer2.equals("1") || answer2.equals("leader")) ? "leader" : "emp";
 
@@ -64,7 +64,11 @@ class AdminMenu extends Menu{
 			case "3":
 			case "delete":
                 this.AdminDelete(type);
-                break;
+				break;
+			case "4":
+			case "show":
+				this.AdminShow(type);
+				break;
             default:
                 this.AdminsMenu();
 		}
@@ -124,8 +128,7 @@ class AdminMenu extends Menu{
 		String id = hlp.readWord("User ID: ");
 
 		try {
-			while (!id.matches("^[0-9]+$") || !this.admin.delete(Integer.parseInt(id), type))
-			{
+			while (!id.matches("^[0-9]+$") || !this.admin.delete(Integer.parseInt(id), type)) {
 				System.out.println(RED_BOLD + "An Error occured!");
 				System.out.println("Please Re enter the info." + RESET);
 				id = hlp.readWord("User ID: ");
@@ -135,6 +138,29 @@ class AdminMenu extends Menu{
 
 			System.out.println(GREEN_BOLD + "User Deleted Successfully!" + RESET);
 			this.AdminsMenu();
+		} catch (Exception e) {
+			this.AdminsMenu();
+		}
+	}
+	
+	private void AdminShow(String type)
+	{
+		try {
+			System.out.print(BLACK_BACKGROUND + WHITE_BOLD);
+			System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
+			System.out.printf("|%-14s%-16s|%-13s%-17s|%-12s%-18s|\n", " ", "ID", " ", "Name", " " , "Password");
+			System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
+			for (String[] row: admin.read(type))
+			{
+				for (int i = 0; i < row.length; i++) {
+					System.out.printf("|%-30s", row[i]);
+				}
+				System.out.println("|");
+			}
+			System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
+			System.out.print(RESET);
+			this.AdminsMenu();
+			
 		} catch (Exception e) {
 			this.AdminsMenu();
 		}
