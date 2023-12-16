@@ -237,10 +237,26 @@ class LeaderMenu extends Menu {
 				this.ProjectsMenu();
 		}
 	}
-
+// String title, String description, String starTime, String endTime, String phase,
+//String estimationHours, String priority, int project_id, int empId
 	private void AddTask(int project_id)
 	{
+		String title = hlp.readLine("Enter the task title:");
+		String description = hlp.readLine("Enter the task description:");
+		String startTime = hlp.readLine("Enter the task start time:");
+		String phase = "On Going";
+		String endTime = hlp.readLine("Enter the task end time:");
+		String estimationHours = hlp.readLine("Enter the task estimation hours:");
+		String priority = hlp.readLine("Enter the task priority:");
+		String empId = hlp.readWord("Enter the assigned employee id:");
 
+		while (!empId.matches("[0-9]+") || leader.addTask(title, description, startTime, endTime, phase, estimationHours, priority, project_id, Integer.parseInt(empId)))
+		{
+			System.out.println(errMessage);
+			empId = hlp.readWord("Re-Enter the assigned employee id:");
+		}
+		System.out.println(GREEN_BOLD + BLACK_BACKGROUND + "Task added successfully!" + RESET);
+		this.TasksMenu(project_id);
 	}
 
 	private void RequestsMenu() {
