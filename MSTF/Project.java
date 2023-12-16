@@ -5,9 +5,11 @@ public class Project extends information {
         id = fs.getNextID("projects");
     }
 
-    public Project(String title, String description, String starTime, String endTime, int numberOfTasks) {
+    public Project(String title, String description, String starTime, String endTime) {
         super(title, description, starTime, endTime);
-        tasks = new Task[numberOfTasks];
         id = fs.getNextID("projects");
+    }
+    public String[] getInformation(){
+        return hlp.paramsToArr(getId(),getTitle(),getDescription(),getStarTime(),getEndTime());
     }
 }
