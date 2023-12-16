@@ -1,7 +1,13 @@
+import static ConsoleColors.ConsoleColors.*;
+import java.util.Scanner;
 import java.util.Arrays;
+
 
 public class Helpers {
 	
+	private Scanner input = new Scanner(System.in);
+
+
 	/**
 	 * Takes an unknown number and data type of parameters
 	 * and convert them to a String Array
@@ -144,5 +150,73 @@ public class Helpers {
 			spaces += " ";
 
 		return (spaces);
+	}
+
+	/**
+	 * Read a single word from the user's input
+	 * And delete the the trailing new line
+	 *
+	 * @param message - The inputed word
+	 *
+	 * @return The inputed word
+	 */
+	public String readWord(String message)
+	{
+		System.out.print(YELLOW_BOLD + message + " " + GREEN_BOLD);
+		String word = input.next();
+
+		System.out.print(RESET);
+		input.nextLine();
+
+		return (word.strip());
+	}
+
+
+	/**
+	 * Read a line from the user's input
+	 *
+	 * @param message - The inputed line
+	 *
+	 * @return - The inputed line
+	 */
+	public String readLine(String message)
+	{
+		System.out.print(YELLOW_BOLD + message + " " + GREEN_BOLD);
+		String line = input.nextLine();
+
+		System.out.print(RESET);
+
+		return (line.strip());
+	}
+
+
+	/**
+	 * Check if the user's choice is right.
+	 *
+	 * @param Back - weather the user can go a step back or not.Z
+	 * @param input - The choice that the user entered
+	 * @param options - The option that the user should choice from.
+	 *
+	 * @return true | false
+	 */
+	public boolean rightInput(boolean Back, String input, Object... options)
+	{
+		for (int i = 0; i < options.length; i++)
+			if (String.valueOf(options[i]).toLowerCase().equals(input.toLowerCase()))
+				return (true);
+		return ((Back ? (input.toLowerCase().equals("exit") || input.toLowerCase().equals("back")) : false));
+	}
+
+
+	/**
+	 * Print the options that the user should choose from
+	 *
+	 * @param options - The options
+	 */
+	public void printOptions(String... options)
+	{
+		for (int i = 0; i < options.length; i++)
+			System.out.println(BLUE_BOLD + (i + 1) + RESET + ". " + options[i]);
+		System.out.println();
 	}
 }

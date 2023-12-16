@@ -1,7 +1,6 @@
 id                              |name                            |password=3
 --------------------------------|--------------------------------|--------------------------------
-1                               |NOOOOOOOO                       |newPass
+1                               |yesyes                          |newPass
 2                               |hos                             |pass
 4                               |alo                             |alo
-5                               |asd                             |qwe
-6                               |lion                            |1231
+5                               |asd                             |asd

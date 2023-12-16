@@ -1,25 +1,62 @@
+import static ConsoleColors.ConsoleColors.*;
+
+
 public class Main {
     public static void main(String[] args) throws Exception
     {
-        FileStorage fs = new FileStorage();
-        Helpers hlp = new Helpers();
+        // FileStorage fs = new FileStorage();
+        // Helpers hlp = new Helpers();
 
-        // Menu menu = new Menu();
+        Menu menu = new Menu();
+        menu.MainMenu();
 
-        // menu.MainMenu();
-        Admin admin = new Admin("MO", "2131");
+        // fs.createTable("projects",
+        // "project_id","project_title","project_description","project_startTime","project_endtime");
+
+        // System.gc();
+        // fs.createTable("timestamp", "id", "date", "emp_id", "start_date", "finish_date");
+
+        // fs.createTable("request", "id","emp_id", "massage", "send date", "status");
+
+        // Employee emp = new Employee("asd", "qwe");
+
+        // emp.login(emp.getName(), emp.getPassword());
+
+        // emp.send("Hello PLEASE HELP ME");
+        // emp.send("Hello PLEASE HELP ME AGAIN");
+        // emp.send("give me money pls");
+
+        // for (String[] row: emp.seeRespond(emp.getId()))
+        // {
+        //     for (int i = 0; i < row.length; i++) {
+        //         System.out.printf("|%-30s", row[i]);
+        //     }
+        //     System.out.println("|");
+        // }
+
+
+
+        // Admin ad = new Admin("mohamed", "12345");
+
+        // System.out.print(BLACK_BACKGROUND + WHITE_BOLD);
+        // System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
+        // System.out.printf("|%-14s%-16s|%-13s%-17s|%-12s%-18s|\n", " ", "ID", " ", "Name", " " , "Password");
+        // System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
+        // for (String[] row: res)
+        // {
+        //     for (int i = 0; i < row.length; i++)
+        //     {
+        //         System.out.printf("|%-30s", row[i]);
+        //     }
+        //     System.out.println("|");
+        // }
+        // System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
+        // System.out.print(RESET);
+
         // fs.createTable("test", "id", "name");
         // fs.add("test", hlp.paramsToArr("4", "ali"));
         // fs.add("test", hlp.paramsToArr("5", "ahmed"));
         // fs.add("test", hlp.paramsToArr("6", "a"));
-        String[][] ans = admin.read("emp");
-        for (String[] row : ans)
-        {
-            for (String value : row) {
-                System.out.print("(" + value + ")" + " \t    | ");
-            }
-            System.out.println();
-        }
 
         // fs.update("test", hlp.intToArr(0), hlp.paramsToArr(4), hlp.intToArr(1), hlp.paramsToArr("66656"));
 
@@ -28,7 +65,13 @@ public class Main {
         // fs.delete("tmp", hlp.intToArr(0), hlp.paramsToArr(5));
 
         // String[][] res = fs.read("test.txt", hlp.intToArr(0), hlp.paramsToArr("5"), true);
-        
+        // for (String[] row : res)
+        // {
+        //     for (String value : row) {
+        //         System.out.print("(" + value + ")" + " \t    | ");
+        //     }
+        //     System.out.println();
+        // }
 
 
         // Admin admin = new Admin("mohamed", "12345");

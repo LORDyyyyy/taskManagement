@@ -40,6 +40,8 @@ public class Admin extends Person {
         for (String[] row : res) {
             if (Integer.parseInt(row[0]) == ID) {
                 fs.delete(nameFile, hlp.intToArr(0), hlp.paramsToArr(ID));
+                if (nameFile.equals("emp") || nameFile.equals("employee"))
+                    fs.delete("request", hlp.intToArr(1), hlp.paramsToArr(ID));
                 return true;
             }
         }
