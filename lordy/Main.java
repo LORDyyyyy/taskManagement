@@ -7,26 +7,28 @@ public class Main {
         // Menu menu = new Menu();
 
         // menu.MainMenu();
-
+        Admin admin = new Admin("MO", "2131");
         // fs.createTable("test", "id", "name");
         // fs.add("test", hlp.paramsToArr("4", "ali"));
         // fs.add("test", hlp.paramsToArr("5", "ahmed"));
         // fs.add("test", hlp.paramsToArr("6", "a"));
+        String[][] ans = admin.read("emp");
+        for (String[] row : ans)
+        {
+            for (String value : row) {
+                System.out.print("(" + value + ")" + " \t    | ");
+            }
+            System.out.println();
+        }
 
-        fs.update("test", hlp.intToArr(0), hlp.paramsToArr(4), hlp.intToArr(1), hlp.paramsToArr("66656"));
+        // fs.update("test", hlp.intToArr(0), hlp.paramsToArr(4), hlp.intToArr(1), hlp.paramsToArr("66656"));
 
         // fs.delete("test", hlp.intToArr(0), hlp.paramsToArr(6));
 
         // fs.delete("tmp", hlp.intToArr(0), hlp.paramsToArr(5));
 
         // String[][] res = fs.read("test.txt", hlp.intToArr(0), hlp.paramsToArr("5"), true);
-        // for (String[] row : res)
-        // {
-        //     for (String value : row) {
-        //         System.out.print("(" + value + ")" + " \t    | ");
-        //     }
-        //     System.out.println();
-        // }
+        
 
 
         // Admin admin = new Admin("mohamed", "12345");

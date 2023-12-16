@@ -45,4 +45,9 @@ public class Admin extends Person {
         }
         return false;
     }
+
+    public String[][] read(String fileName) throws Exception {
+        String[][] res = fs.read(fileName);
+        return res;
+    }
 }

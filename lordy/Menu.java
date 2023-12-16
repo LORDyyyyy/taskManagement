@@ -4,8 +4,8 @@ import static ConsoleColors.ConsoleColors.*;
 public class Menu {
 
 	private Scanner input = new Scanner(System.in);
-	private String errMessage = RED + "Wrong Input!" + RESET;
-	private String seperator = CYAN_BOLD + "-------------------------" + RESET; 
+	protected String errMessage = RED + "Wrong Input!" + RESET;
+	protected String seperator = CYAN_BOLD + "-------------------------" + RESET; 
 	private String welcome = """
 		██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗██╗
 		██║    ██║██╔════╝██║     ██╔════╝██╔═══██╗████╗ ████║██╔════╝██║
