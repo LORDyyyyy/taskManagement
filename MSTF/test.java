@@ -54,6 +54,7 @@ public class test {
                             project.tasks[index].getStarTime(), project.tasks[index].getEndTime(),
                             project.tasks[index].getPhase(), project.tasks[index].getEstimationHours()));
 
+<<<<<<< HEAD
             // Add to "task_log" file with the auto-incremented value of id from "tasks"
             // file
             project.fs.add("task_log",
@@ -85,6 +86,32 @@ public class test {
         } catch (Exception ex) {
             return false;
         }
+=======
+        // Add to "task_log" file with the auto-incremented value of id from "tasks"
+        // file
+        project.fs.add("task_log",
+                project.hlp.paramsToArr(null, project.tasks[index].getId(), null, null, null, null));
+    }
+
+    public void deleteTask(int task_id) throws Exception {
+        System.err.println("i am here");
+        // Delete from "tasks" file
+        for (String[] row : project.fs.read("tasks", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id)))
+        {
+            for (String val: row)
+                System.out.print(val + " - ");
+                System.out.println();
+        }
+        project.fs.delete("tasks", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id));
+
+        // Delete from "task_log" file based on the task_id
+        project.fs.delete("task_log", project.hlp.intToArr(1), project.hlp.paramsToArr(task_id));
+    }
+
+    public void updateTask(int task_id, int column, String newvalue) throws Exception {
+        project.fs.update("tasks", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id),
+                project.hlp.intToArr(column), project.hlp.paramsToArr(newvalue));
+>>>>>>> f9bf3cde28547d106fe50bff39d3eb49fb4c0ab5
     }
 
     // end of leader tasks
@@ -105,7 +132,11 @@ public class test {
         test mstf2 = new test();
         // mstf2.addTask("mstf_task", "moataaz", "27/11", "1/12", "working on", "9
         // hours", "important", 1, mstf2.id);
+<<<<<<< HEAD
         // mstf2.addProject("moataz", "moataz project", "27/11", "12/12");
+=======
+        mstf2.deleteTask(5);
+>>>>>>> f9bf3cde28547d106fe50bff39d3eb49fb4c0ab5
         // mstf2.updateTask(2, 4, "new try");
         // fs.createTable("projects",
         // "project_id","project_title","project_description","project_startTime","project_endtime");

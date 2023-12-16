@@ -1,31 +1,41 @@
 public class Main {
     public static void main(String[] args) throws Exception
     {
-        FileStorage fs = new FileStorage(32);
-        Helpers hlp = new Helpers();
+        // FileStorage fs = new FileStorage();
+        // Helpers hlp = new Helpers();
+
         Menu menu = new Menu();
+        menu.MainMenu();
 
-        // menu.MainMenu();
-        Employee employee = new Employee("Mostafa", "234234");
-        Leader lead = new Leader("Mostafa", "234234", "MO@gmial");
-        System.out.println(employee.getId());
-        // employee.add("emp");
-        Admin admin = new Admin();
-        admin.add("MOhamed", "3423342", "pdpa");
-        // Leader leed = new Leader("Mokhter", "2323232", "mo5tar@gmail.com");
-        // fs.add("leader", hlp.paramsToArr(leed.getId(), leed.getName(), leed.getPassword(), leed.getEmail()));
-        // System.out.println(leed.login("MOSTAFA","232423" , "leader"));
-        // Leader leed = new Leader("MOSTAFA", "232423", "mo5t@gmail.com");
-        // System.out.println(leed.update(11 , "MO", "leader"));
+        // fs.createTable("test", "id", "name");
+        // fs.add("test", hlp.paramsToArr("4", "ali"));
+        // fs.add("test", hlp.paramsToArr("5", "ahmed"));
+        // fs.add("test", hlp.paramsToArr("6", "a"));
 
-        // fs.reload("admin");
-        // fs.add("admin", hlp.paramsToArr(1, 2));
-        // fs.createTable("admin", "Name", "Password");
-        // Admin admin = new Admin();
-        // System.out.println (admin.login("Moa", "1231", "admin"));
+        // fs.update("test", hlp.intToArr(0), hlp.paramsToArr(4), hlp.intToArr(1), hlp.paramsToArr("66656"));
+
+        // fs.delete("test", hlp.intToArr(0), hlp.paramsToArr(6));
+
+        // fs.delete("tmp", hlp.intToArr(0), hlp.paramsToArr(5));
+
+        // String[][] res = fs.read("test.txt", hlp.intToArr(0), hlp.paramsToArr("5"), true);
+        // for (String[] row : res)
+        // {
+        //     for (String value : row) {
+        //         System.out.print("(" + value + ")" + " \t    | ");
+        //     }
+        //     System.out.println();
+        // }
 
 
+        // Admin admin = new Admin("mohamed", "12345");
 
+        // if (admin.login("mohamed", "12345"))
+        //     System.out.println("wel");
+        // else
+        //     System.out.println("no");
+
+        // admin.add("asdsad", "1423456", "emp");
 
         // fs.reload("task");
         // fs.add("task", hlp.paramsToArr(1, 5));
@@ -63,14 +73,7 @@ public class Main {
 
 
 
-        // String[][] res = fs.read("emp.txt", temp, Helpers.paramsToArr("man"));
-        // for (String[] row : res)
-        // {
-        //     for (String value : row) {
-        //         System.out.print("(" + value + ")" + " \t    | ");
-        //     }
-        //     System.out.println();
-        // }
+
 
         // System.out.println("---------");
 

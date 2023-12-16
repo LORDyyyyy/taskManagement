@@ -4,8 +4,8 @@ import static ConsoleColors.ConsoleColors.*;
 public class Menu {
 
 	private Scanner input = new Scanner(System.in);
-	private String errMessage = RED + "Wrong Input!" + RESET;
-	private String seperator = CYAN_BOLD + "-------------------------" + RESET; 
+	protected String errMessage = RED + "Wrong Input!" + RESET;
+	protected String seperator = CYAN_BOLD + "-------------------------" + RESET; 
 	private String welcome = """
 		██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗██╗
 		██║    ██║██╔════╝██║     ██╔════╝██╔═══██╗████╗ ████║██╔════╝██║
@@ -13,7 +13,10 @@ public class Menu {
 		██║███╗██║██╔══╝  ██║     ██║     ██║   ██║██║╚██╔╝██║██╔══╝  ╚═╝
 		╚███╔███╔╝███████╗███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗██╗
 		 ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝
-		""";
+			""";
+	private Admin admin;
+	private Employee emp;
+	private Leader leader;
 
 	/**
 	 * Read a single word from the user's input
@@ -25,13 +28,13 @@ public class Menu {
 	 */
 	private String readWord(String message)
 	{
-		System.out.print(YELLOW_BOLD + message + " ");
+		System.out.print(YELLOW_BOLD + message + " " + GREEN_BOLD);
 		String word = input.next();
 
 		System.out.print(RESET);
 		input.nextLine();
 
-		return (word);
+		return (word.strip());
 	}
 
 
@@ -61,13 +64,12 @@ public class Menu {
 	 *
 	 * @return true | false
 	 */
-	private boolean rightInput(String input, Object... options)
+	private boolean rightInput(boolean Back, String input, Object... options)
 	{
 		for (int i = 0; i < options.length; i++)
 			if (String.valueOf(options[i]).toLowerCase().equals(input.toLowerCase()))
 				return (true);
-
-		return (input.toLowerCase().equals("exit")  || input.toLowerCase().equals("back"));
+		return ((Back ? (input.toLowerCase().equals("exit") || input.toLowerCase().equals("back")) : false));
 	}
 
 
@@ -97,7 +99,7 @@ public class Menu {
 
 		String answer = this.readWord("Your Choice:");
 
-		while (!this.rightInput(answer, 1, 2, 3, "admin", "leader", "employee"))
+		while (!this.rightInput(true, answer, 1, 2, 3, "admin", "leader", "employee"))
 		{
 			System.out.println(errMessage);
 			answer = this.readWord("Your Choice:");
@@ -109,23 +111,71 @@ public class Menu {
 				System.exit(0);
 			case "1":
 			case "admin":
-				this.AdminMenu();
+				this.Login("admin");
 				break;
 			case "2":
 			case "leader":
-				this.LeadersMenu();
+				this.Login("leader");
 				break;
 			case "3":
 			case "employee":
-				this.EmployeeMenu();
+				this.Login("emp");
 		}
 	}
 
+	private void Login(String type)
+	{
+		String name = this.readWord("Your name: ");
+		String password = this.readWord("Your Password: ");
+		try {
+			if (type.equals("emp"))
+			{
+				this.emp = new Employee(name, password);
+
+				while (!emp.login(emp.getName(), emp.getPassword()))
+				{
+					System.out.println(RED_BOLD + "Account was not found!");
+					System.out.println("Please Re-enter your information or exit the program" + RESET);
+					emp.setName(this.readWord("Your name: "));
+					emp.setPassword(this.readWord("Your Password: "));
+				}
+				this.EmployeeMenu();
+			}
+			else if (type.equals("leader"))
+			{
+				this.leader = new Leader(name, password);
+
+				while (!leader.login(leader.getName(), leader.getPassword()))
+				{
+					System.out.println(RED_BOLD + "Account was not found!");
+					System.out.println("Please Re-enter your information or exit the program" + RESET);
+					leader.setName(this.readWord("Your name: "));
+					leader.setPassword(this.readWord("Your Password: "));
+				}
+				this.LeadersMenu();
+			}
+			else if (type.equals("admin"))
+			{
+				this.admin = new Admin(name, password);
+
+				while (!admin.login(admin.getName(), admin.getPassword()))
+				{
+					System.out.println(RED_BOLD + "Account was not found!");
+					System.out.println("Please Re-enter your information or exit the program" + RESET);
+					admin.setName(this.readWord("Your name: "));
+					admin.setPassword(this.readWord("Your Password: "));
+				}
+				this.AdminMenu();
+			}
+		} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
 
 	/**
 	 * The Leader Menu that will be displayed for the leader.
 	 */
-	public void LeadersMenu()
+	private void LeadersMenu()
 	{
 		System.out.println(seperator);
 		System.out.println(BLUE_BOLD  + "Leader Menu" + RESET);
@@ -134,7 +184,7 @@ public class Menu {
 
 		String answer = this.readWord("Your Choice:");
 
-		while (!this.rightInput(answer, 1, 2, 3, "projects", "requests", "calendar"))
+		while (!this.rightInput(true, answer, 1, 2, 3, "projects", "requests", "calendar"))
 		{
 			System.out.println(errMessage);
 			answer = this.readWord("Your Choice:");
@@ -162,7 +212,7 @@ public class Menu {
 	}
 
 
-	public void ProjectsMenu()
+	private void ProjectsMenu()
 	{
 		System.out.println(seperator);
 		System.out.println(BLUE_BOLD  + "Projects Menu" + RESET);
@@ -171,7 +221,7 @@ public class Menu {
 
 		String answer = this.readWord("Your Choice:");
 
-		while (!this.rightInput(answer, 1,2,3,4, "projects", "Add", "Update", "Delete"))
+		while (!this.rightInput(true, answer, 1,2,3,4, "projects", "Add", "Update", "Delete"))
 		{
 			System.out.println(errMessage);
 			answer = this.readWord("Your Choice:");
@@ -203,7 +253,7 @@ public class Menu {
 	}
 
 
-	public void ShowProjects()
+	private void ShowProjects()
 	{
 		System.out.println(seperator);
 		System.out.println(BLUE_BOLD  + "Projects" + RESET);
@@ -211,7 +261,7 @@ public class Menu {
 		this.printOptions("All projects will be here...");
 	}
 
-	public void TasksMenu()
+	private void TasksMenu()
 	{
 		System.out.println("Tasks Menu");
 		System.out.println("----------");
@@ -220,7 +270,7 @@ public class Menu {
 				+ "\n" + "3 => Delete\n");
 	}
 
-	public void EmployeeMenu()
+	private void EmployeeMenu()
 	{
 		System.out.println("Employee Menu");
 		System.out.println("---------------------------");
@@ -229,37 +279,109 @@ public class Menu {
 				+ "\n" + "3 => Task log\n");
 	}
 
-	public void AdminMenu()
-	{;
+	private void AdminMenu()
+	{
+		;
 		System.out.println(seperator);
-		System.out.println(BLUE_BOLD  + "Admin Menu" + RESET);
+		System.out.println(BLUE_BOLD + "Admin Menu" + RESET);
 		System.out.println(seperator);
 		this.printOptions("Add Leaders/Employees", "Update Leaders/Employees", "Delete Leaders/Employees");
 
 		String answer = this.readWord("Your Choice:");
-		while (!this.rightInput(answer, 1, 2, 3, "add", "update", "delete"))
+		while (!this.rightInput(true, answer, 1, 2, 3, "add", "update", "delete"))
 		{
 			System.out.println(errMessage);
 			answer = this.readWord("Your Choice:");
 		}
 
+		switch (answer) {
+			case "exit":
+				System.exit(0);
+			case "back":
+				this.MainMenu();
+				break;
+		}
+
 		String answer2 = this.readWord("User Type (leader/employee):");
-		while (!this.rightInput(answer2, 1, 2, "leader", "employee"))
+		while (!this.rightInput(false, answer2, 1, 2, "leader", "employee"))
 		{
 			System.out.println(errMessage);
 			answer2 = this.readWord("Your Choice:");
 		}
+		String type = (answer2.equals("1") || answer2.equals("leader")) ? "leader" : "emp";
 
-		switch (answer2) {
-			case "exit":
-				System.exit(0);
+		switch (answer) {
+			case "1":
+			case "add":
+				this.AdminAdd(type);
 				break;
-			case "back":
-				this.LeadersMenu();
+			case "2":
+			case "update":
+				this.AdminUpdate(type);
 				break;
-			default:
-				System.out.println("TODO!");
-				break;
+			case "3":
+			case "delete":
+				this.AdminDelete(type);
+		}
+	}
+
+
+	private void AdminAdd(String type)
+	{
+		String name = this.readWord("User name: ");
+		String password = this.readWord("User Password: ");
+
+		try {
+			while (!this.admin.add(name, password, type)) {
+				System.out.println(RED_BOLD + "An Error occured!");
+				System.out.println("Please Re enter the info." + RESET);
+				name = this.readWord("User name: ");
+				password = this.readWord("User Password: ");
+			}
+
+			System.out.println(GREEN_BOLD + "User Added Successfully!" + RESET);
+			this.AdminMenu();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	private void AdminUpdate(String type)
+	{
+		String id = this.readWord("User ID: ");
+		String name = this.readWord("New user name: ");
+
+		try {
+			while (!id.matches("^[0-9]+$") || !this.admin.update(Integer.parseInt(id), name, type)) {
+				System.out.println(RED_BOLD + "An Error occured!");
+				System.out.println("Please Re enter the info." + RESET);
+				id = this.readWord("User ID: ");
+				name = this.readWord("User name: ");
+			}
+
+			System.out.println(GREEN_BOLD + "User Updated Successfully!" + RESET);
+			this.AdminMenu();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void AdminDelete(String type)
+	{
+		String id = this.readWord("User ID: ");
+
+		try {
+			while (!id.matches("^[0-9]+$") || !this.admin.delete(Integer.parseInt(id), type)) {
+				System.out.println(RED_BOLD + "An Error occured!");
+				System.out.println("Please Re enter the info." + RESET);
+				id = this.readWord("User ID: ");
+			}
+
+			System.out.println(GREEN_BOLD + "User Deleted Successfully!" + RESET);
+			this.AdminMenu();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
