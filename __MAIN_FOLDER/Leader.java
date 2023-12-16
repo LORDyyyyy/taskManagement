@@ -38,14 +38,14 @@ public class Leader extends Person
     */
     public boolean respondRequest(String Id, String respond) throws Exception
     {
-        if(!respond.toLowerCase().equals("approved") && !respond.toLowerCase().equals("refused"))
+        if (!respond.toLowerCase().equals("approved") && !respond.toLowerCase().equals("refused"))
             return false;
-        else
-        {
+        else {
             fs.update("request",
-                hlp.intToArr(0), hlp.paramsToArr(Id)
-                ,hlp.intToArr(4), hlp.paramsToArr(respond));
+                    hlp.intToArr(0), hlp.paramsToArr(Id), hlp.intToArr(4), hlp.paramsToArr(respond));
             return true;
         }
     }
+    
+    
 }
