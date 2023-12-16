@@ -1,4 +1,4 @@
-public class information {
+public abstract class information {
     protected FileStorage fs = new FileStorage();
     protected Helpers hlp = new Helpers();
     protected int id;
@@ -54,4 +54,5 @@ public class information {
     public int getId() {
         return id;
     }
+    abstract public String[] getInformation();
 }
