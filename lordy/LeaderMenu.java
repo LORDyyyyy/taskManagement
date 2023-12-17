@@ -51,7 +51,7 @@ class LeaderMenu extends Menu {
 				break;
 			case "4":
 			case "calendar":
-				// this.Calender
+				this.Calender();
 				break;
 			default:
 				this.LeadersMenu();
@@ -106,7 +106,7 @@ class LeaderMenu extends Menu {
 		String[][] projects = leader.showProjects();
 
 		if (hlp.isEmptyTable(projects))
-			System.out.println(RED_BOLD + BLACK_BACKGROUND + "You didn't send any requests before!" + RESET);
+			System.out.println(RED_BOLD + BLACK_BACKGROUND + "There are no projects!" + RESET);
 		else {
 			System.out.print(BLACK_BACKGROUND + WHITE_BOLD);
 			System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
@@ -200,11 +200,11 @@ class LeaderMenu extends Menu {
 		System.out.println(this.seperator);
 		System.out.println(BLUE_BOLD + "Tasks Menu" + RESET);
 		System.out.println(this.seperator);
-		hlp.printOptions("Add Task", "Update Task", "Delete Task", "Task Log");
+		hlp.printOptions("Add Task", "Update Task", "Delete Task", "Task Log", "Show Tasks");
 
 		String answer = hlp.readWord("Your Choice:");
 
-		while (!hlp.rightInput(true, answer, 1, 2, 3, 4, "add", "update", "delete", "log"))
+		while (!hlp.rightInput(true, answer, 1, 2, 3, 4, 5, "add", "update", "delete", "log", "show", "tasks"))
 		{
 			System.out.println(errMessage);
 			answer = hlp.readWord("Your Choice:");
@@ -223,22 +223,72 @@ class LeaderMenu extends Menu {
 				break;
 			case "2":
 			case "update":
-				// this.UpdateTask(project_id);
+				this.UpdateTask(project_id);
 				break;
 			case "3":
 			case "delete":
-				// this.DeleteTask(project_id);
+				this.DeleteTask(project_id);
 				break;
 			case "4":
 			case "log":
-				// this.TaskLog();
+				this.TaskLog(project_id);
 				break;
+			case "5":
+			case "show":
+			case "tasks":
+				this.ShowTasks(project_id);
 			default:
 				this.ProjectsMenu();
 		}
 	}
-// String title, String description, String starTime, String endTime, String phase,
-//String estimationHours, String priority, int project_id, int empId
+
+	private void ShowTasks(int project_id)
+	{
+		System.out.println(this.seperator);
+		System.out.println(BLUE_BOLD + "Tasks" + RESET);
+		System.out.println(this.seperator);
+		try {
+			String[][] tasks = leader.showTasks(project_id);
+			if (hlp.isEmptyTable(tasks))
+					System.out.println(YELLOW_BOLD + BLACK_BACKGROUND + "There are no tasks at the moment.");
+			else 
+			{
+				System.out.print(BLACK_BACKGROUND + WHITE_BOLD);
+				System.out.printf("+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+\n", "-".repeat(26), "-".repeat(26), "-".repeat(26),
+						"-".repeat(26), "-".repeat(26), "-".repeat(26), "-".repeat(26), "-".repeat(26), "-".repeat(26));
+				System.out.printf("|%-10s%-16s|%-10s%-16s|%-9s%-17s|%-10s%-16s|%-10s%-16s|%-10s%-16s|%-10s%-16s|%-10s%-16s|%-10s%-16s|\n",
+						" ", "ID",
+						" ", "ProjectID",
+						" ", "EmpID",
+						" ", "Title",
+						" ", "Desc",
+						" ", "StartTime",
+						" ", "EndTime",
+						" ", "Phase",
+						" ", "Estimated Hours");
+				System.out.printf("+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+\n", "-".repeat(26), "-".repeat(26), "-".repeat(26),
+						"-".repeat(26), "-".repeat(26), "-".repeat(26), "-".repeat(26), "-".repeat(26), "-".repeat(26));
+				for (String[] row : tasks)
+				{
+					for (int i = 0; i < row.length; i++)
+					{
+						if (i == 2)
+							continue;
+						System.out.printf("|%-26s", row[i]);
+					}
+					System.out.println("|");
+				}
+				System.out.printf("+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+%-26s+\n", "-".repeat(26), "-".repeat(26), "-".repeat(26),
+						"-".repeat(26), "-".repeat(26), "-".repeat(26), "-".repeat(26), "-".repeat(26), "-".repeat(26));
+				System.out.println(RESET);
+				this.TasksMenu(project_id);
+			}
+		} catch (Exception e)
+		{
+			this.TasksMenu(project_id);
+		}
+	}
+
 	private void AddTask(int project_id)
 	{
 		String title = hlp.readLine("Enter the task title:");
@@ -250,14 +300,111 @@ class LeaderMenu extends Menu {
 		String priority = hlp.readLine("Enter the task priority:");
 		String empId = hlp.readWord("Enter the assigned employee id:");
 
-		while (!empId.matches("[0-9]+") || leader.addTask(title, description, startTime, endTime, phase, estimationHours, priority, project_id, Integer.parseInt(empId)))
-		{
+		while (!empId.matches("[0-9]+") || !leader.addTask(title, description, startTime, endTime, phase,
+				estimationHours, priority, project_id, Integer.parseInt(empId))) {
 			System.out.println(errMessage);
 			empId = hlp.readWord("Re-Enter the assigned employee id:");
 		}
 		System.out.println(GREEN_BOLD + BLACK_BACKGROUND + "Task added successfully!" + RESET);
 		this.TasksMenu(project_id);
 	}
+
+
+	private void UpdateTask(int project_id)
+	{
+		String id = hlp.readWord("Enter the task id:");
+		
+		System.out.println("""
+				To change the Assigned Employee, press 1.
+				To change the title, press 2.
+				To change description , press 3.
+				To change the start time, press 4.
+				To change the end time, press 5.
+				To change the phase, press 6.
+				To change the estimation hours, press 7.
+				To change priority, press 8.
+				""");
+		String col = hlp.readWord("Your choice:");
+		String newVal = hlp.readLine("Enter the new value:");
+
+		while (!id.matches("^[0-9]+$") || !col.matches("^[1-7]+$") || !leader.updateTask(Integer.parseInt(id), Integer.parseInt(col) + 2, newVal))
+		{
+			System.out.println(errMessage);
+			id = hlp.readWord("Re-Enter the task id:");
+			col = hlp.readWord("Re-Enter which information to change:");
+			newVal = hlp.readLine("Re-Enter the new value:");
+		}
+		System.out.println(GREEN_BOLD + BLACK_BACKGROUND + "Task Updated successfully!" + RESET);
+		this.TasksMenu(project_id);
+	}
+
+	private void DeleteTask(int project_id)
+	{
+		String id = hlp.readWord("Enter the task id:");
+
+		while (!id.matches("^[0-9]+$") || !leader.deleteTask(Integer.parseInt(id))) {
+			System.out.println(errMessage);
+			id = hlp.readWord("Re-Enter the task id:");
+		}
+		System.out.println(GREEN_BOLD + BLACK_BACKGROUND + "Task Deleted successfully!" + RESET);
+		this.TasksMenu(project_id);
+	}
+	
+	public void TaskLog(int project_id)
+	{
+		String id = hlp.readWord("Enter the task id:");
+
+		while (!id.matches("^[0-9]+$")) {
+			System.out.println(errMessage);
+			id = hlp.readWord("Re-Enter the task id:");
+		}
+
+		String[][] res = leader.taskLog(Integer.parseInt(id));
+		if (hlp.isEmptyTable(res)) {
+			System.out.println(" Table is empty!");
+		} else {
+			System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30),
+					"-".repeat(30), "-".repeat(30));
+			System.out.printf("|%-14s%-16s|%-13s%-17s|%-12s%-18s|%-11s%-19s|%-10s%-20s|\n", " ", "ID", " ", "Task_id",
+					" ", "Employee_id", " ", "Start_time", " ", "End_time");
+			System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30),
+					"-".repeat(30), "-".repeat(30));
+			for (String[] row : res) {
+				for (int i = 0; i < row.length - 1; i++) {
+					System.out.printf("|%-30s", row[i]);
+				}
+				System.out.println("|");
+			}
+			System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30),
+					"-".repeat(30), "-".repeat(30));
+		}
+
+		this.TasksMenu(project_id);
+	}
+	
+	private void Calender()
+    {
+        String[][] all = leader.Calendar(); 
+        if(all.length == 0)
+        {
+            System.out.println(" Table is empty!");
+        }
+        else
+        {
+                System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30) , "-".repeat(30) , "-".repeat(30));
+                System.out.printf("|%-14s%-16s|%-13s%-17s|%-12s%-18s|%-11s%-19s|%-10s%-20s|\n", " ", "ID", " ", "Date", " " , "Employee_id" , " " , "Start_date" , " ", "Finish_date");
+                System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30) , "-".repeat(30) , "-".repeat(30));
+                for (String[] row: all)
+                {
+                    for (int i = 0; i < row.length; i++)
+                    {
+                        System.out.printf("|%-30s", row[i]);
+                    }
+                    System.out.println("|");
+                }
+                System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30) , "-".repeat(30) , "-".repeat(30));
+        } 
+    }
 
 	private void RequestsMenu() {
 		try {
@@ -291,6 +438,7 @@ class LeaderMenu extends Menu {
 			this.LeadersMenu();
 		}
 	}
+
 
 	private void RespondReq() {
 		try {

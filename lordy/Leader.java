@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Leader extends Person {
     private Project project;
 
@@ -83,11 +86,14 @@ public class Leader extends Person {
     }
 
 
-
-    public String[][] showTasks(String project_id) throws Exception
-    {
-        return (fs.read("tasks", hlp.intToArr(1), hlp.paramsToArr(project_id)));
+    public String[][] showTasks(int project_id) {
+        try {
+            return (fs.read("tasks", hlp.intToArr(1), hlp.paramsToArr(project_id)));
+        } catch (Exception e) {
+            return new String[0][0];
+        }
     }
+
 
     public boolean addTask(String title, String description, String starTime, String endTime, String phase,
             String estimationHours, String priority, int project_id, int empId) {
@@ -124,28 +130,60 @@ public class Leader extends Person {
             fs.update("tasks", hlp.intToArr(0), hlp.paramsToArr(task_id),
                     hlp.intToArr(column), hlp.paramsToArr(newvalue));
             if (column == 1) {
-                // If column is 0 or 9, update "task_log" and use column as the update column index
                 fs.update("task_log", hlp.intToArr(1), hlp.paramsToArr(task_id),
                         hlp.intToArr(column), hlp.paramsToArr(newvalue));
-                return true;
             }
+            return true;
         } catch (Exception ex) {
             return false;
         }
-        return false;
     }
 
-    public void deleteTask(int task_id) throws Exception {
-        System.err.println("i am here");
-        // Delete from "tasks" file
-        for (String[] row : project.fs.read("tasks", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id))) {
-            for (String val : row)
-                System.out.print(val + " - ");
-            System.out.println();
+    public boolean deleteTask(int task_id) {
+        try {
+            project.fs.delete("tasks", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id));
+            project.fs.delete("task_log", project.hlp.intToArr(1), project.hlp.paramsToArr(task_id));
+            return true;
+        } catch (Exception ex) {
+            return false;
         }
-        project.fs.delete("tasks", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id));
+    }
 
-        // Delete from "task_log" file based on the task_id
-        project.fs.delete("task_log", project.hlp.intToArr(0), project.hlp.paramsToArr(task_id));
+    public String[][] taskLog(int task_id)
+    {
+        try {
+            return (fs.read("task_log", hlp.intToArr(1), hlp.paramsToArr(task_id)));
+        } catch (Exception e) {
+            return new String[0][0];
+        }
+    }
+    
+
+    public String[][] Calendar()
+    {
+        try {
+            String[][] all = fs.read("timestamp");
+            LocalDate now = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            String nowDate = now.format(formatter);
+            String[][] res = new String[all.length][all[0].length] ;
+            int counter = 0;
+            for(String[] row : all)
+            {
+                if(nowDate.equals(row[1]))
+                {
+                    int count=0;
+                    for (String item : row)
+                    {
+                        res[counter][count] = item;
+                        count++;
+                    }
+                }
+                counter++;
+            }
+            return (hlp.removeNullRows(res));
+        } catch (Exception e) {
+            return new String[0][0];
+        }
     }
 }
