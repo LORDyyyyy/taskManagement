@@ -181,7 +181,7 @@ public class Helpers {
 	 */
 	public String readLine(String message)
 	{
-		System.out.print(YELLOW_BOLD + message + " ");
+		System.out.print(YELLOW_BOLD + message + " " + GREEN_BOLD);
 		String line = input.nextLine();
 
 		System.out.print(RESET);

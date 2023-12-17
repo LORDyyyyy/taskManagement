@@ -1,4 +1,3 @@
-import static ConsoleColors.ConsoleColors.*;
 
 
 public class Main {

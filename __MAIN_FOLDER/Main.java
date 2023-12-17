@@ -1,4 +1,3 @@
-import static ConsoleColors.ConsoleColors.*;
 
 
 public class Main {
@@ -9,6 +8,12 @@ public class Main {
 
         Menu menu = new Menu();
         menu.MainMenu();
+
+        // fs.createTable("projects",
+        // "project_id","project_title","project_description","project_startTime","project_endtime");
+
+        // System.gc();
+        // fs.createTable("timestamp", "id", "date", "emp_id", "start_date", "finish_date");
 
         // fs.createTable("request", "id","emp_id", "massage", "send date", "status");
 
@@ -36,7 +41,7 @@ public class Main {
         // System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
         // System.out.printf("|%-14s%-16s|%-13s%-17s|%-12s%-18s|\n", " ", "ID", " ", "Name", " " , "Password");
         // System.out.printf("+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30));
-        // for (String[] row: ad.read("emp"))
+        // for (String[] row: res)
         // {
         //     for (int i = 0; i < row.length; i++)
         //     {

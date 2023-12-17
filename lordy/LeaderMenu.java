@@ -390,20 +390,23 @@ class LeaderMenu extends Menu {
             System.out.println(" Table is empty!");
         }
         else
-        {
-                System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30) , "-".repeat(30) , "-".repeat(30));
-                System.out.printf("|%-14s%-16s|%-13s%-17s|%-12s%-18s|%-11s%-19s|%-10s%-20s|\n", " ", "ID", " ", "Date", " " , "Employee_id" , " " , "Start_date" , " ", "Finish_date");
-                System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30) , "-".repeat(30) , "-".repeat(30));
-                for (String[] row: all)
-                {
-                    for (int i = 0; i < row.length; i++)
-                    {
-                        System.out.printf("|%-30s", row[i]);
-                    }
-                    System.out.println("|");
-                }
-                System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30) , "-".repeat(30) , "-".repeat(30));
-        } 
+		{
+			System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30),
+					"-".repeat(30), "-".repeat(30));
+			System.out.printf("|%-14s%-16s|%-13s%-17s|%-12s%-18s|%-11s%-19s|%-10s%-20s|\n", " ", "ID", " ", "Date", " ",
+					"Employee_id", " ", "Start_date", " ", "Finish_date");
+			System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30),
+					"-".repeat(30), "-".repeat(30));
+			for (String[] row : all) {
+				for (int i = 0; i < row.length; i++) {
+					System.out.printf("|%-30s", row[i]);
+				}
+				System.out.println("|");
+			}
+			System.out.printf("+%-30s+%-30s+%-30s+%-30s+%-30s+\n", "-".repeat(30), "-".repeat(30), "-".repeat(30),
+					"-".repeat(30), "-".repeat(30));
+		}
+		this.LeadersMenu();
     }
 
 	private void RequestsMenu() {
